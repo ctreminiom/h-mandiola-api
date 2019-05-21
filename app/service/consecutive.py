@@ -140,7 +140,7 @@ class Consecutive:
                 db = SQL()
 
                 # Fetch all info
-                cursor = db.execute(test.consecutives_inner)
+                cursor = db.execute(views.gets_consecutives)
 
                 # Iterate the rows and encode it.
                 result = []
@@ -184,7 +184,7 @@ class Consecutive:
             db = SQL()
 
             #Get consecutive by ID
-            cursor = db.execute(test.consecutive.format(encode(id)))
+            cursor = db.execute(procedures.get_actual_consecutive.format(encode(id)))
 
             row = cursor.fetchone()
 
@@ -223,7 +223,7 @@ class Consecutive:
                 #increase consecutive with range
                 new_consecutive = int(actual_consecutive) + 1
 
-                cursor = db.execute(test.increase_consecutive.format(encode(str(new_consecutive)), encode(id)))
+                cursor = db.execute(procedures.increase_consecutive.format(encode(str(new_consecutive)), encode(id)))
 
                 db.commit()
                 db.close()
@@ -242,7 +242,7 @@ class Consecutive:
 
                 new_consecutive_as_string = str(new_consecutive)
 
-                cursor = db.execute(test.increase_consecutive.format(encode(new_consecutive_as_string),encode(id)))
+                cursor = db.execute(procedures.increase_consecutive.format(encode(new_consecutive_as_string),encode(id)))
                 db.commit()
                 db.close()
 

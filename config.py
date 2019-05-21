@@ -25,6 +25,10 @@ class procedures:
 
     """
 
+    increase_consecutive = "exec dba.increase_consecutive @ID = '{}', @Consecutive = '{}';"
+
+    get_actual_consecutive = "exec dba.get_actual_consecutive @ID = '{}';"
+
 
 class sequences:
     consecutive_type = "exec dba.get_consecutives_types_sequence;"
@@ -47,21 +51,12 @@ class insertProcedures:
 
 class test:
 
-    consecutive = "select has_prefix, prefix, has_range, initial, final, consecutive from dba.consecutives where ID = '{}';"
-    increase_consecutive = "update dba.consecutives set consecutive = '{}' where id = '{}';"
+    roles_sequence = "exec dba.get_roles_sequence;"
 
+    roles_view = "select * from dba.get_roles;"
 
+    roles_insert = "exec dba.insert_role @ID = '{}', @Name = '{}';"
 
-    consecutives_inner = """
-
-    select consecutives.id, consecutives_types.name, consecutives.description, consecutives.has_prefix, consecutives.prefix, consecutives.has_range, consecutives.initial, consecutives.final, consecutives.consecutive
-    from dba.consecutives
-    inner join dba.consecutives_types
-    on dba.consecutives.type = dba.consecutives_types.id 
-
-
-
-    """
 
 
 
