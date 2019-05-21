@@ -39,3 +39,13 @@ class ConsecutiveController(Resource):
         message = service.getAll()
 
         return {'result': message["message"]}, message["status"]
+
+
+class ConsecutiveActionController(Resource):
+    def put(self, id):
+        service = Consecutive()
+
+        message = service.increase(id)
+
+        return {'result': message["message"]}, message["status"]
+

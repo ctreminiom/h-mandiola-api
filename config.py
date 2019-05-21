@@ -45,4 +45,28 @@ class insertProcedures:
 
 
 
+class test:
+
+    consecutive = "select has_prefix, prefix, has_range, initial, final, consecutive from dba.consecutives where ID = '{}';"
+    increase_consecutive = "update dba.consecutives set consecutive = '{}' where id = '{}';"
+
+
+
+    consecutives_inner = """
+
+    select consecutives.id, consecutives_types.name, consecutives.description, consecutives.has_prefix, consecutives.prefix, consecutives.has_range, consecutives.initial, consecutives.final, consecutives.consecutive
+    from dba.consecutives
+    inner join dba.consecutives_types
+    on dba.consecutives.type = dba.consecutives_types.id 
+
+
+
+    """
+
+
+
+
+
+
+
 

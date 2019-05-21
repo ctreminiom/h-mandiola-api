@@ -4,7 +4,7 @@
 from app.service.database import SQL
 from app.middleware.encrypt import encode, decode
 
-from config import sequences, procedures, views
+from config import sequences, procedures, views, test
 
 
 class Type:
@@ -140,14 +140,26 @@ class Consecutive:
                 db = SQL()
 
                 # Fetch all info
-                cursor = db.execute(views.gets_consecutives)
+                cursor = db.execute(test.consecutives_inner)
 
                 # Iterate the rows and encode it.
                 result = []
 
                 row = cursor.fetchone()
                 while row:
-                    result.append({'name': decode(row[1]), 'id': decode(row[0])})
+
+                    result.append({
+
+                        'id': decode(row[0]),
+                        'type': decode(row[1]),
+                        'description': decode(row[2]),
+                        'has_prefix': decode(row[3]),
+                        'prefix': decode(row[4]),
+                        'has_range': decode(row[5]),
+                        'initial': decode(row[6]),
+                        'final': decode(row[7]),
+                        'consecutive': decode(row[8])
+                    })
                     row = cursor.fetchone()
 
                 db.close()
@@ -166,3 +178,100 @@ class Consecutive:
                 message["status"] = 500
 
                 return message
+
+    def increase(self, id):
+        try:
+            db = SQL()
+
+            #Get consecutive by ID
+            cursor = db.execute(test.consecutive.format(encode(id)))
+
+            row = cursor.fetchone()
+
+            if not row:
+                message = {}
+                message["message"] = "The consecutive doesn't exists"
+                message["status"] = 400
+
+                return message
+
+
+            has_range = decode(row[2])
+
+            if has_range == "true":
+
+                actual_consecutive = decode(row[5])
+
+                initial_as_int = int(decode(row[3]))
+                final_as_int = int(decode(row[4]))
+
+                if initial_as_int > int(actual_consecutive) + 1:
+
+                    message = {}
+                    message["message"] = "The next consecutive value is bigger than the initial value"
+                    message["status"] = 400
+
+                    return message
+
+                if final_as_int <= int(actual_consecutive) + 1:
+                    message = {}
+                    message["message"] = "The next consecutive value is bigger than the final value"
+                    message["status"] = 400
+
+                    return message
+
+                #increase consecutive with range
+                new_consecutive = int(actual_consecutive) + 1
+
+                cursor = db.execute(test.increase_consecutive.format(encode(str(new_consecutive)), encode(id)))
+
+                db.commit()
+                db.close()
+
+                message = {}
+                message["message"] = "Consecutive increased!"
+                message["status"] = 201
+                
+                return message
+
+
+            if has_range == "false":
+
+                #increase consecutive without range
+                new_consecutive = int(actual_consecutive) + 1
+
+                new_consecutive_as_string = str(new_consecutive)
+
+                cursor = db.execute(test.increase_consecutive.format(encode(new_consecutive_as_string),encode(id)))
+                db.commit()
+                db.close()
+
+
+                message = {}
+                message["message"] = "Consecutive increased!"
+                message["status"] = 201
+                
+                return message
+
+            
+
+            db.close()
+
+            message = {}
+            message["message"] = "ASD"
+            message["status"] = 200
+
+            return message
+
+
+        except AssertionError as error:
+            message = {}
+            message["message"] = error
+            message["status"] = 500
+
+            return message
+
+
+
+
+        
