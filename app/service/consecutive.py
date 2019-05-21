@@ -3,90 +3,108 @@
 
 from app.service.database import SQL
 from app.middleware.encrypt import encode, decode
-from config import sequences, insertProcedures, selectViews
+
+from config import sequences, procedures, views
 
 
 class Type:
-
     def create(self, name):
-        handler = SQL()
-
         try:
-            cursor = handler.execute(sequences.consecutive_type)
-        except:
-            print("ERROR")
+            db = SQL()
 
-        row = cursor.fetchone()
-
-        id_encrypted = encode(str(row[0]))
-        name_encypted = encode(name)
-
-        try:
-            cursor = handler.execute(
-                insertProcedures.consecutive_type.format(id_encrypted, name_encypted))
-        except:
-            print("ERROR")
-
-        handler.commit()
-        handler.close()
-
-        return "New consecutive type created"
-
-    def gets(self):
-        handler = SQL()
-
-        try:
-            cursor = handler.execute(selectViews.consecutive_type)
-        except:
-            print("ERROR")
-
-        row = cursor.fetchone()
-
-        result = []
-        while row:
-            result.append({'name': decode(row[1]), 'id': decode(row[0])})
+            # Get next ID value
+            cursor = db.execute(sequences.consecutive_type)
             row = cursor.fetchone()
 
-        handler.close()
+            id_encrypted = encode(str(row[0]))
+            name_encypted = encode(name)
 
-        return result
+            # Insert the info
+            cursor = db.execute(procedures.insert_consecutive_type.format(
+                id_encrypted, name_encypted))
+
+            db.commit()
+            db.close()
+
+            message = {}
+            message["message"] = "new consecutive type created!!"
+            message["status"] = 201
+
+            return message
+
+        except AssertionError as error:
+            print(error)
+
+            message = {}
+            message["message"] = error
+            message["status"] = 500
+
+            return message
+
+    def getAll(self):
+        try:
+            db = SQL()
+
+            # Fetch all info
+            cursor = db.execute(views.gets_consecutives_types)
+
+            # Iterate the rows and encode it.
+            result = []
+
+            row = cursor.fetchone()
+            while row:
+                result.append({'name': decode(row[1]), 'id': decode(row[0])})
+                row = cursor.fetchone()
+
+            db.close()
+
+            message = {}
+            message["message"] = result
+            message["status"] = 200
+
+            return message
+
+        except AssertionError as error:
+            print(error)
+
+            message = {}
+            message["message"] = error
+            message["status"] = 500
+
+            return message
 
 
 class Consecutive:
+    def create(self, body):
+        try:
 
-    def create(self, type, description, has_prefix, prefix, has_range, initial, final, consecutive):
-        if has_prefix in ['false', 'true']:
+            if body["has_prefix"] in ['false', 'true']:
 
-            if has_range in ['false', 'true']:
-                handler = SQL()
+                if body["has_range"] in ['false', 'true']:
 
-                try:
-                    cursor = handler.execute(sequences.consecutive)
+                    db = SQL()
 
+                    # Get next ID value
+                    cursor = db.execute(sequences.consecutive)
                     row = cursor.fetchone()
-                    print(row[0])
 
                     id_encrypted = encode(str(row[0]))
-                    type_encryted = encode(type)
-                    description_encryted = encode(description)
-                    has_prefix_encryted = encode(has_prefix)
-                    prefix_encryted = encode(prefix)
-                    has_range_encryted = encode(has_range)
-                    initial_encryted = encode(initial)
-                    final_encryted = encode(final)
-                    consecutive_encryted = encode(consecutive)
+                    type_encryted = encode(body["type"])
+                    description_encryted = encode(body["description"])
+                    has_prefix_encryted = encode(body["has_prefix"])
+                    prefix_encryted = encode(body["prefix"])
+                    has_range_encryted = encode(body["has_range"])
+                    initial_encryted = encode(body["initial"])
+                    final_encryted = encode(body["final"])
+                    consecutive_encryted = encode(body["consecutive"])
 
-                    try:
-                        cursor = handler.execute(
-                            insertProcedures.consecutive.format(id_encrypted, type_encryted, description_encryted, has_prefix_encryted,
-                                                                prefix_encryted, has_range_encryted, initial_encryted, final_encryted, consecutive_encryted)
-                        )
-                    except AssertionError as error:
-                        print(error)
-                        print("ERROR 1")
+                    cursor = db.execute(
+                        procedures.insert_consecutive.format(id_encrypted, type_encryted, description_encryted, has_prefix_encryted,
+                                                             prefix_encryted, has_range_encryted, initial_encryted, final_encryted, consecutive_encryted)
+                    )
 
-                    handler.commit()
-                    handler.close()
+                    db.commit()
+                    db.close()
 
                     message = {}
                     message["message"] = "New consecutive created"
@@ -94,14 +112,57 @@ class Consecutive:
 
                     return message
 
-                except AssertionError as error:
-                    print(error)
-                    print("ERROR 2")
+                else:
+                    message = {}
+                    message["message"] = "The has_range field doesn't allow this value"
+                    message["status"] = 400
 
+                    return message
 
-        message = {}
+            else:
+                message = {}
+                message["message"] = "The has_prefix value doesn't allowed"
+                message["status"] = 400
 
-        message["message"] = "ERROR"
-        message["status"] = 400
+                return message
 
-        return message
+        except AssertionError as error:
+            print(error)
+
+            message = {}
+            message["message"] = error
+            message["status"] = 500
+
+            return message
+
+    def getAll(self):
+            try:
+                db = SQL()
+
+                # Fetch all info
+                cursor = db.execute(views.gets_consecutives)
+
+                # Iterate the rows and encode it.
+                result = []
+
+                row = cursor.fetchone()
+                while row:
+                    result.append({'name': decode(row[1]), 'id': decode(row[0])})
+                    row = cursor.fetchone()
+
+                db.close()
+
+                message = {}
+                message["message"] = result
+                message["status"] = 200
+
+                return message
+
+            except AssertionError as error:
+                print(error)
+
+                message = {}
+                message["message"] = error
+                message["status"] = 500
+
+                return message

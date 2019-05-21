@@ -4,28 +4,38 @@
 from flask_restful import Resource
 from flask import request
 
-from app.service.consecutive import Type
+from app.service.consecutive import Type, Consecutive
 
-class ConsecutiveType(Resource):
+
+class ConsecutiveTypeController(Resource):
 
     def get(self):
-        handler = Type()
-        types = handler.gets()
+        service = Type()
+        message = service.getAll()
 
-        return {'result': types}, 200
-
+        return {'result': message["message"]}, message["status"]
 
     def post(self):
-        data = request.get_json(silent=True)
 
-        handler = Type()
+        body = request.get_json(silent=True)
+        service = Type()
 
-        response = handler.create(data["name"])
-
-        return {'result': response}, 201
-
-    
-        
+        message = service.create(body["name"])
+        return {'result': message["message"]}, message["status"]
 
 
-        
+class ConsecutiveController(Resource):
+
+    def post(self):
+
+        body = request.get_json(silent=True)
+        service = Consecutive()
+
+        message = service.create(body)
+        return {'result': message["message"]}, message["status"]
+
+    def get(self):
+        service = Consecutive()
+        message = service.getAll()
+
+        return {'result': message["message"]}, message["status"]

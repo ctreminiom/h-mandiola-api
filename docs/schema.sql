@@ -6,7 +6,7 @@ SERVER:      (local)
 DATABASE:    
 
 	SCHEMAS:
-		dbo, guest, db_owner, db_accessadmin, db_securityadmin, db_ddladmin, db_backupoperator, db_datareader, db_datawriter, db_denydatareader, db_denydatawriter, dev2
+		dbo, guest, db_owner, db_accessadmin, db_securityadmin, db_ddladmin, db_backupoperator, db_datareader, db_datawriter, db_denydatareader, db_denydatawriter, dba
 	TABLES:
 		roles, grants, users, activities, consecutives_types, clients, consecutives, rooms, rooms_types, products, products_types
 
@@ -15,10 +15,10 @@ DATABASE:
 BEGIN TRAN
 GO
 
--- Create schema [dev2]
-Print 'Create schema [dev2]'
+-- Create schema [dba]
+Print 'Create schema [dba]'
 GO
-CREATE SCHEMA [dev2]
+CREATE SCHEMA [dba]
 	AUTHORIZATION [dbo]
 GO
 
@@ -31,10 +31,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[consecutives_types]
-Print 'Create table [dev2].[consecutives_types]'
+-- Create table [dba].[consecutives_types]
+Print 'Create table [dba].[consecutives_types]'
 GO
-CREATE TABLE [dev2].[consecutives_types] (
+CREATE TABLE [dba].[consecutives_types] (
 		[ID]       [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[name]     [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		CONSTRAINT [consecutives_types_PK]
@@ -46,7 +46,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[consecutives_types] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[consecutives_types] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -58,10 +58,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[products_types]
-Print 'Create table [dev2].[products_types]'
+-- Create table [dba].[products_types]
+Print 'Create table [dba].[products_types]'
 GO
-CREATE TABLE [dev2].[products_types] (
+CREATE TABLE [dba].[products_types] (
 		[ID]       [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[name]     [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		CONSTRAINT [products_types_PK]
@@ -73,7 +73,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[products_types] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[products_types] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -85,10 +85,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[roles]
-Print 'Create table [dev2].[roles]'
+-- Create table [dba].[roles]
+Print 'Create table [dba].[roles]'
 GO
-CREATE TABLE [dev2].[roles] (
+CREATE TABLE [dba].[roles] (
 		[ID]       [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[name]     [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		CONSTRAINT [roles_PK]
@@ -100,7 +100,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[roles] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[roles] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -112,10 +112,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[rooms_types]
-Print 'Create table [dev2].[rooms_types]'
+-- Create table [dba].[rooms_types]
+Print 'Create table [dba].[rooms_types]'
 GO
-CREATE TABLE [dev2].[rooms_types] (
+CREATE TABLE [dba].[rooms_types] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[name]            [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[description]     [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -128,7 +128,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[rooms_types] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[rooms_types] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -140,10 +140,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[users]
-Print 'Create table [dev2].[users]'
+-- Create table [dba].[users]
+Print 'Create table [dba].[users]'
 GO
-CREATE TABLE [dev2].[users] (
+CREATE TABLE [dba].[users] (
 		[ID]                    [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[username]              [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[email]                 [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -159,25 +159,25 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create index username_AK on [dev2].[users]
-Print 'Create index username_AK on [dev2].[users]'
+-- Create index username_AK on [dba].[users]
+Print 'Create index username_AK on [dba].[users]'
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [username_AK]
-	ON [dev2].[users] ([username])
+	ON [dba].[users] ([username])
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create index email_AK on [dev2].[users]
-Print 'Create index email_AK on [dev2].[users]'
+-- Create index email_AK on [dba].[users]
+Print 'Create index email_AK on [dba].[users]'
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [email_AK]
-	ON [dev2].[users] ([email])
+	ON [dba].[users] ([email])
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[users] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[users] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -189,10 +189,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[consecutives]
-Print 'Create table [dev2].[consecutives]'
+-- Create table [dba].[consecutives]
+Print 'Create table [dba].[consecutives]'
 GO
-CREATE TABLE [dev2].[consecutives] (
+CREATE TABLE [dba].[consecutives] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[type]            [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[description]     [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -211,7 +211,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[consecutives] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[consecutives] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -223,10 +223,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[grants]
-Print 'Create table [dev2].[grants]'
+-- Create table [dba].[grants]
+Print 'Create table [dba].[grants]'
 GO
-CREATE TABLE [dev2].[grants] (
+CREATE TABLE [dba].[grants] (
 		[ID]       [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[user]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[role]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -239,7 +239,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[grants] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[grants] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -251,10 +251,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[activities]
-Print 'Create table [dev2].[activities]'
+-- Create table [dba].[activities]
+Print 'Create table [dba].[activities]'
 GO
-CREATE TABLE [dev2].[activities] (
+CREATE TABLE [dba].[activities] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[consecutive]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[name]            [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -269,7 +269,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[activities] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[activities] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -281,10 +281,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[clients]
-Print 'Create table [dev2].[clients]'
+-- Create table [dba].[clients]
+Print 'Create table [dba].[clients]'
 GO
-CREATE TABLE [dev2].[clients] (
+CREATE TABLE [dba].[clients] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[consecutive]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[first_name]      [varchar](8000) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -302,25 +302,25 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create index email_AK on [dev2].[clients]
-Print 'Create index email_AK on [dev2].[clients]'
+-- Create index email_AK on [dba].[clients]
+Print 'Create index email_AK on [dba].[clients]'
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [email_AK]
-	ON [dev2].[clients] ([email])
+	ON [dba].[clients] ([email])
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create index username_AK on [dev2].[clients]
-Print 'Create index username_AK on [dev2].[clients]'
+-- Create index username_AK on [dba].[clients]
+Print 'Create index username_AK on [dba].[clients]'
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [username_AK]
-	ON [dev2].[clients] ([username])
+	ON [dba].[clients] ([username])
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[clients] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[clients] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -332,10 +332,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[products]
-Print 'Create table [dev2].[products]'
+-- Create table [dba].[products]
+Print 'Create table [dba].[products]'
 GO
-CREATE TABLE [dev2].[products] (
+CREATE TABLE [dba].[products] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[consecutive]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NULL,
 		[type]            [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -352,7 +352,7 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[products] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[products] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
@@ -364,10 +364,10 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create table [dev2].[rooms]
-Print 'Create table [dev2].[rooms]'
+-- Create table [dba].[rooms]
+Print 'Create table [dba].[rooms]'
 GO
-CREATE TABLE [dev2].[rooms] (
+CREATE TABLE [dba].[rooms] (
 		[ID]              [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[consecutive]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		[type]            [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
@@ -384,131 +384,131 @@ GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
-ALTER TABLE [dev2].[rooms] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dba].[rooms] SET (LOCK_ESCALATION = TABLE)
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key activities_consecutives_FK on [dev2].[activities]
-Print 'Create foreign key activities_consecutives_FK on [dev2].[activities]'
+-- Create foreign key activities_consecutives_FK on [dba].[activities]
+Print 'Create foreign key activities_consecutives_FK on [dba].[activities]'
 GO
-ALTER TABLE [dev2].[activities]
+ALTER TABLE [dba].[activities]
 	WITH CHECK
 	ADD CONSTRAINT [activities_consecutives_FK]
-	FOREIGN KEY ([consecutive]) REFERENCES [dev2].[consecutives] ([ID])
-ALTER TABLE [dev2].[activities]
+	FOREIGN KEY ([consecutive]) REFERENCES [dba].[consecutives] ([ID])
+ALTER TABLE [dba].[activities]
 	CHECK CONSTRAINT [activities_consecutives_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key clients_consecutives_FK on [dev2].[clients]
-Print 'Create foreign key clients_consecutives_FK on [dev2].[clients]'
+-- Create foreign key clients_consecutives_FK on [dba].[clients]
+Print 'Create foreign key clients_consecutives_FK on [dba].[clients]'
 GO
-ALTER TABLE [dev2].[clients]
+ALTER TABLE [dba].[clients]
 	WITH CHECK
 	ADD CONSTRAINT [clients_consecutives_FK]
-	FOREIGN KEY ([consecutive]) REFERENCES [dev2].[consecutives] ([ID])
-ALTER TABLE [dev2].[clients]
+	FOREIGN KEY ([consecutive]) REFERENCES [dba].[consecutives] ([ID])
+ALTER TABLE [dba].[clients]
 	CHECK CONSTRAINT [clients_consecutives_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key consecutives_consecutives_types_FK on [dev2].[consecutives]
-Print 'Create foreign key consecutives_consecutives_types_FK on [dev2].[consecutives]'
+-- Create foreign key consecutives_consecutives_types_FK on [dba].[consecutives]
+Print 'Create foreign key consecutives_consecutives_types_FK on [dba].[consecutives]'
 GO
-ALTER TABLE [dev2].[consecutives]
+ALTER TABLE [dba].[consecutives]
 	WITH CHECK
 	ADD CONSTRAINT [consecutives_consecutives_types_FK]
-	FOREIGN KEY ([type]) REFERENCES [dev2].[consecutives_types] ([ID])
-ALTER TABLE [dev2].[consecutives]
+	FOREIGN KEY ([type]) REFERENCES [dba].[consecutives_types] ([ID])
+ALTER TABLE [dba].[consecutives]
 	CHECK CONSTRAINT [consecutives_consecutives_types_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key grants_users_FK on [dev2].[grants]
-Print 'Create foreign key grants_users_FK on [dev2].[grants]'
+-- Create foreign key grants_users_FK on [dba].[grants]
+Print 'Create foreign key grants_users_FK on [dba].[grants]'
 GO
-ALTER TABLE [dev2].[grants]
+ALTER TABLE [dba].[grants]
 	WITH CHECK
 	ADD CONSTRAINT [grants_users_FK]
-	FOREIGN KEY ([user]) REFERENCES [dev2].[users] ([ID])
-ALTER TABLE [dev2].[grants]
+	FOREIGN KEY ([user]) REFERENCES [dba].[users] ([ID])
+ALTER TABLE [dba].[grants]
 	CHECK CONSTRAINT [grants_users_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key grants_roles_FK on [dev2].[grants]
-Print 'Create foreign key grants_roles_FK on [dev2].[grants]'
+-- Create foreign key grants_roles_FK on [dba].[grants]
+Print 'Create foreign key grants_roles_FK on [dba].[grants]'
 GO
-ALTER TABLE [dev2].[grants]
+ALTER TABLE [dba].[grants]
 	WITH CHECK
 	ADD CONSTRAINT [grants_roles_FK]
-	FOREIGN KEY ([role]) REFERENCES [dev2].[roles] ([ID])
-ALTER TABLE [dev2].[grants]
+	FOREIGN KEY ([role]) REFERENCES [dba].[roles] ([ID])
+ALTER TABLE [dba].[grants]
 	CHECK CONSTRAINT [grants_roles_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key productos_consecutives_FK on [dev2].[products]
-Print 'Create foreign key productos_consecutives_FK on [dev2].[products]'
+-- Create foreign key productos_consecutives_FK on [dba].[products]
+Print 'Create foreign key productos_consecutives_FK on [dba].[products]'
 GO
-ALTER TABLE [dev2].[products]
+ALTER TABLE [dba].[products]
 	WITH CHECK
 	ADD CONSTRAINT [productos_consecutives_FK]
-	FOREIGN KEY ([consecutive]) REFERENCES [dev2].[consecutives] ([ID])
-ALTER TABLE [dev2].[products]
+	FOREIGN KEY ([consecutive]) REFERENCES [dba].[consecutives] ([ID])
+ALTER TABLE [dba].[products]
 	CHECK CONSTRAINT [productos_consecutives_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key products_products_types_FK on [dev2].[products]
-Print 'Create foreign key products_products_types_FK on [dev2].[products]'
+-- Create foreign key products_products_types_FK on [dba].[products]
+Print 'Create foreign key products_products_types_FK on [dba].[products]'
 GO
-ALTER TABLE [dev2].[products]
+ALTER TABLE [dba].[products]
 	WITH CHECK
 	ADD CONSTRAINT [products_products_types_FK]
-	FOREIGN KEY ([type]) REFERENCES [dev2].[products_types] ([ID])
-ALTER TABLE [dev2].[products]
+	FOREIGN KEY ([type]) REFERENCES [dba].[products_types] ([ID])
+ALTER TABLE [dba].[products]
 	CHECK CONSTRAINT [products_products_types_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key rooms_consecutives_FK on [dev2].[rooms]
-Print 'Create foreign key rooms_consecutives_FK on [dev2].[rooms]'
+-- Create foreign key rooms_consecutives_FK on [dba].[rooms]
+Print 'Create foreign key rooms_consecutives_FK on [dba].[rooms]'
 GO
-ALTER TABLE [dev2].[rooms]
+ALTER TABLE [dba].[rooms]
 	WITH CHECK
 	ADD CONSTRAINT [rooms_consecutives_FK]
-	FOREIGN KEY ([consecutive]) REFERENCES [dev2].[consecutives] ([ID])
-ALTER TABLE [dev2].[rooms]
+	FOREIGN KEY ([consecutive]) REFERENCES [dba].[consecutives] ([ID])
+ALTER TABLE [dba].[rooms]
 	CHECK CONSTRAINT [rooms_consecutives_FK]
 
 GO
 
 IF @@ERROR<>0 OR @@TRANCOUNT=0 BEGIN IF @@TRANCOUNT>0 ROLLBACK SET NOEXEC ON END
 GO
--- Create foreign key rooms_rooms_types_FK on [dev2].[rooms]
-Print 'Create foreign key rooms_rooms_types_FK on [dev2].[rooms]'
+-- Create foreign key rooms_rooms_types_FK on [dba].[rooms]
+Print 'Create foreign key rooms_rooms_types_FK on [dba].[rooms]'
 GO
-ALTER TABLE [dev2].[rooms]
+ALTER TABLE [dba].[rooms]
 	WITH CHECK
 	ADD CONSTRAINT [rooms_rooms_types_FK]
-	FOREIGN KEY ([type]) REFERENCES [dev2].[rooms_types] ([ID])
-ALTER TABLE [dev2].[rooms]
+	FOREIGN KEY ([type]) REFERENCES [dba].[rooms_types] ([ID])
+ALTER TABLE [dba].[rooms]
 	CHECK CONSTRAINT [rooms_rooms_types_FK]
 
 GO

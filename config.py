@@ -15,6 +15,26 @@ class config:
     api_port = 5000
 
 
+class procedures:
+    insert_consecutive_type = "exec dba.insert_consecutive_type @ID = '{}', @Name = '{}';"
+
+    insert_consecutive = """
+
+    exec dba.insert_consecutive @ID = '{}', @Type = '{}', @Description = '{}', @HasPrefix = '{}',
+    @Prefix = '{}', @HasRange = '{}', @Initial = '{}', @Final = '{}', @Consecutive = '{}';
+
+    """
+
+
+class sequences:
+    consecutive_type = "exec dba.get_consecutives_types_sequence;"
+    consecutive = "exec dba.get_consecutives_sequence;"
+
+
+class views:
+    gets_consecutives_types = "select * from dba.get_consecutives_types;"
+    gets_consecutives = "select * from dba.get_consecutives;"
+
 
 class insertProcedures:
     consecutive_type = "exec addConsecutiveType @ID = '{}', @Name = '{}';"
@@ -26,12 +46,3 @@ class insertProcedures:
 
 
 
-
-class sequences:
-    consecutive_type = "exec getNextValueConsecutivesypes2;"
-    consecutive = "exec getNextValueConsecutives;"
-
-
-
-class selectViews:
-    consecutive_type = "select * from dev2.getConsecutiveTypes;"
