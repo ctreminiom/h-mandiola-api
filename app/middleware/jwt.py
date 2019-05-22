@@ -12,7 +12,7 @@ from flask import request
 def encode(user):
 
     payload = {
-        'public_id': user.username,
+        'public_id': user,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
         'iat': datetime.datetime.utcnow(),
     }

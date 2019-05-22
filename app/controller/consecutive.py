@@ -6,17 +6,19 @@ from flask import request
 
 from app.service.consecutive import Type, Consecutive
 
+from app.middleware.jwt import require
+
 
 class ConsecutiveTypeController(Resource):
-
+    @require
     def get(self):
         service = Type()
         message = service.getAll()
 
         return {'result': message["message"]}, message["status"]
 
+    @require
     def post(self):
-
         body = request.get_json(silent=True)
         service = Type()
 
@@ -26,6 +28,7 @@ class ConsecutiveTypeController(Resource):
 
 class ConsecutiveController(Resource):
 
+    @require
     def post(self):
 
         body = request.get_json(silent=True)
@@ -34,6 +37,7 @@ class ConsecutiveController(Resource):
         message = service.create(body)
         return {'result': message["message"]}, message["status"]
 
+    @require
     def get(self):
         service = Consecutive()
         message = service.getAll()
@@ -42,6 +46,8 @@ class ConsecutiveController(Resource):
 
 
 class ConsecutiveActionController(Resource):
+
+    @require
     def put(self, id):
         service = Consecutive()
 
