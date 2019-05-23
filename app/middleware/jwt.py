@@ -9,10 +9,10 @@ from functools import wraps
 from flask import request
 
 
-def encode(user):
+def createToken(user):
 
     payload = {
-        'public_id': user,
+        'user': user,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
         'iat': datetime.datetime.utcnow(),
     }

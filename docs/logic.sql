@@ -85,6 +85,44 @@ insert into dba.roles(ID, name) values (@ID, @Name);
 
 
 
+----------------------------- Users --------------------------------------
+create sequence dba.users_sequence
+start with 1
+increment by 1;
+---------------------------------------------------------------
+
+create view dba.get_users
+as
+select * from dba.users;
+--------------------------------------
+
+create procedure dba.get_users_sequence
+as
+select next value for dba.users_sequence;
+----------------------------------------
+
+create procedure dba.insert_user @ID varchar(1700), @Username varchar(8000), @Email varchar(8000), @Password varchar(8000),
+    @Security_Question varchar(8000), @Security_Answer varchar(8000)
+as
+insert into dba.users(ID, username, email, password, security_question, security_answer)
+values (@ID, @Username, @Email, @Password, @Security_Question, @Security_Answer);
+---------------------------------------
+
+create procedure dba.get_user_by_username @Username varchar(8000)
+as
+select * from dba.users where username = @Username;
+
+---------------------------------------
+create procedure dba.change_password @Username varchar(8000), @NewPassword varchar(8000)
+as
+update dba.users set password = @NewPassword where username = @Username;
+
+---------------------------------------
+create procedure dba.get_user_by_email @Email varchar(8000)
+as
+select * from dba.users where email = @Email;
+
+
 
 
 

@@ -2,7 +2,7 @@ from app.service.database import SQL
 from app.middleware.encrypt import encode, decode
 
 
-from config import test
+from config import sequences, views, procedures
 
 
 
@@ -13,7 +13,7 @@ class Role:
             db = SQL()
 
             # Get next ID value
-            cursor = db.execute(test.roles_sequence)
+            cursor = db.execute(sequences.role)
             row = cursor.fetchone()
 
             id_encrypted = encode(str(row[0]))
@@ -21,7 +21,7 @@ class Role:
 
 
             #Insert to info
-            cursor = db.execute(test.roles_insert.format(id_encrypted, name_encryped))
+            cursor = db.execute(procedures.insert_role.format(id_encrypted, name_encryped))
 
             db.commit()
             db.close()
@@ -45,7 +45,7 @@ class Role:
             db = SQL()
 
             #Fetch all roles
-            cursor = db.execute(test.roles_view)
+            cursor = db.execute(views.get_roles)
 
 
             #Iterate the rows and encode it

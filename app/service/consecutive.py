@@ -4,7 +4,7 @@
 from app.service.database import SQL
 from app.middleware.encrypt import encode, decode
 
-from config import sequences, procedures, views, test
+from config import sequences, procedures, views
 
 
 class Type:
