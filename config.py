@@ -6,7 +6,7 @@ class config:
     db_host = "34.73.78.37"
     db_user = "SA"
     db_passw = "Ulacit123456789"
-    db_name = "test"
+    db_name = "ulacit"
 
     encypt_key_1 = "atgwYVYMZrNSyDZvWRP6xnMqdkjEPc5LFFma4NDzpHtEgzDUB"
     encypt_key_2 = "mVJCrpg6bZQXPKLcFN9MTfyXZ8NbCYJqWETCyuRJAjnjJfNu3eLypZxDTFmfLZZWf9"
@@ -38,6 +38,10 @@ class procedures:
     get_user_by_email = "exec dba.get_user_by_email @Email = '{}';"
 
 
+    insert_grant = "exec dba.insert_grant @ID = '{}', @User = '{}', @Role = '{}';"
+    remove_grant = "exec dba.remove_grant @User = '{}', @Role = '{}';"
+
+
 
 
 class sequences:
@@ -45,6 +49,7 @@ class sequences:
     consecutive = "exec dba.get_consecutives_sequence;"
     role = "exec dba.get_roles_sequence;"
     user = "exec dba.get_users_sequence;"
+    grant = "exec dba.get_grants_sequence;"
 
 
 class views:
@@ -52,6 +57,7 @@ class views:
     gets_consecutives = "select * from dba.get_consecutives;"
     get_roles = "select * from dba.get_roles;"
     get_users = "select * from dba.users;"
+    get_grants = "select * from dba.get_grants;"
 
 
 

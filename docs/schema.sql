@@ -228,8 +228,8 @@ Print 'Create table [dba].[grants]'
 GO
 CREATE TABLE [dba].[grants] (
 		[ID]       [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
-		[user]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
-		[role]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
+		[userID]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
+		[roleID]     [varchar](1700) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL,
 		CONSTRAINT [grants_PK]
 		PRIMARY KEY
 		NONCLUSTERED
@@ -437,7 +437,7 @@ GO
 ALTER TABLE [dba].[grants]
 	WITH CHECK
 	ADD CONSTRAINT [grants_users_FK]
-	FOREIGN KEY ([user]) REFERENCES [dba].[users] ([ID])
+	FOREIGN KEY ([userID]) REFERENCES [dba].[users] ([ID])
 ALTER TABLE [dba].[grants]
 	CHECK CONSTRAINT [grants_users_FK]
 
@@ -451,7 +451,7 @@ GO
 ALTER TABLE [dba].[grants]
 	WITH CHECK
 	ADD CONSTRAINT [grants_roles_FK]
-	FOREIGN KEY ([role]) REFERENCES [dba].[roles] ([ID])
+	FOREIGN KEY ([roleID]) REFERENCES [dba].[roles] ([ID])
 ALTER TABLE [dba].[grants]
 	CHECK CONSTRAINT [grants_roles_FK]
 

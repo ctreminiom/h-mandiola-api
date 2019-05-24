@@ -125,6 +125,30 @@ select * from dba.users where email = @Email;
 
 
 
+----------------------------- Grants --------------------------------------
+create sequence dba.grants_sequence
+start with 1
+increment by 1;
+---------------------------------------------------------------
+
+create view dba.get_grants
+as
+select * from dba.grants;
+--------------------------------------
+
+create procedure dba.get_grants_sequence
+as
+select next value for dba.grants_sequence;
+----------------------------------------
+
+create procedure dba.insert_grant @ID varchar(1700), @User varchar(1700), @Role varchar(1700)
+as
+insert into dba.grants(ID, userID, roleID)  values (@ID, @User, @Role);
+
+
+create procedure dba.remove_grant @User varchar(1700), @Role varchar(1700)
+as
+delete from dba.grants where userID = @User and roleID = @Role;
 
 
 
