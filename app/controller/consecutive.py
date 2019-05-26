@@ -9,15 +9,7 @@ from app.service.consecutive import Type, Consecutive
 from app.middleware.jwt import require
 
 
-class ConsecutiveTypeController(Resource):
-    @require
-    def get(self):
-        service = Type()
-        message = service.getAll()
-
-        return {'result': message["message"]}, message["status"]
-
-    @require
+class CreateConsecutiveType(Resource):
     def post(self):
         body = request.get_json(silent=True)
         service = Type()
@@ -26,9 +18,15 @@ class ConsecutiveTypeController(Resource):
         return {'result': message["message"]}, message["status"]
 
 
-class ConsecutiveController(Resource):
+class GetConsecutivesTypes(Resource):
+    def get(self):
+        service = Type()
+        message = service.getAll()
 
-    @require
+        return {'result': message["message"]}, message["status"]
+
+
+class CreateConsecutive(Resource):
     def post(self):
 
         body = request.get_json(silent=True)
@@ -37,7 +35,34 @@ class ConsecutiveController(Resource):
         message = service.create(body)
         return {'result': message["message"]}, message["status"]
 
-    @require
+
+class GetConsecutives(Resource):
+    def get(self):
+        service = Consecutive()
+        message = service.getAll()
+
+        return {'result': message["message"]}, message["status"]
+
+
+class IncreaseConsecutive(Resource):
+    def put(self, id):
+        service = Consecutive()
+
+        message = service.increase(id)
+
+        return {'result': message["message"]}, message["status"]
+
+
+class ConsecutiveController(Resource):
+
+    def post(self):
+
+        body = request.get_json(silent=True)
+        service = Consecutive()
+
+        message = service.create(body)
+        return {'result': message["message"]}, message["status"]
+
     def get(self):
         service = Consecutive()
         message = service.getAll()
@@ -47,7 +72,6 @@ class ConsecutiveController(Resource):
 
 class ConsecutiveActionController(Resource):
 
-    @require
     def put(self, id):
         service = Consecutive()
 

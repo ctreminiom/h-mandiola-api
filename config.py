@@ -41,6 +41,10 @@ class procedures:
     insert_grant = "exec dba.insert_grant @ID = '{}', @User = '{}', @Role = '{}';"
     remove_grant = "exec dba.remove_grant @User = '{}', @Role = '{}';"
 
+    insert_activity = "exec dba.insert_activity @ID = '{}', @Consecutive = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
+
+
+
 
 
 
@@ -50,6 +54,7 @@ class sequences:
     role = "exec dba.get_roles_sequence;"
     user = "exec dba.get_users_sequence;"
     grant = "exec dba.get_grants_sequence;"
+    activity = "exec dba.get_activities_sequence;"
 
 
 class views:
@@ -58,6 +63,7 @@ class views:
     get_roles = "select * from dba.get_roles;"
     get_users = "select * from dba.users;"
     get_grants = "select * from dba.get_grants;"
+    get_activities = "select * from dba.get_activities;"
 
 
 

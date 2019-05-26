@@ -152,6 +152,30 @@ delete from dba.grants where userID = @User and roleID = @Role;
 
 
 
+----------------------------- Activities --------------------------------------
+create sequence dba.activities_sequence
+start with 1
+increment by 1;
+---------------------------------------------------------------
+
+create view dba.get_activities
+as
+select * from dba.activities;
+--------------------------------------
+
+create procedure dba.get_activities_sequence
+as
+select next value for dba.activities_sequence;
+----------------------------------------
+
+create procedure dba.insert_activity @ID varchar(1700), @Consecutive varchar(1700), @Name varchar(8000), @Description varchar(8000), @ImagePath varchar(8000)
+as
+insert into dba.activities(ID, consecutive, name, description, image_path) 
+values (@ID, @Consecutive, @Name, @Description, @ImagePath);
+ 
+
+
+
 
 
 
