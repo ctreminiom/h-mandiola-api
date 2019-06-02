@@ -25,6 +25,13 @@ class procedures:
 
     increase_consecutive = "exec dba.increase_consecutive @ID = '{}', @Consecutive = '{}';"
     get_actual_consecutive = "exec dba.get_actual_consecutive @ID = '{}';"
+
+
+    update_final_consecutive_value = "exec dba.update_final_consecutive_value @ID = '{}', @Final = '{}';"
+    update_has_range_consecutive_value = "exec dba.update_has_range_consecutive_value @ID = '{}', @hasRange = '{}';"
+
+    update_consecutive_ranges = "exec dba.update_ranges_consecutive_value @ID = '{}', @Initial = '{}', @Final = '{}';"
+
     insert_role = "exec dba.insert_role @ID = '{}', @Name = '{}';"
 
     insert_user = """

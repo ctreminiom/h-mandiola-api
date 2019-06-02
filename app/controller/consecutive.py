@@ -53,6 +53,18 @@ class IncreaseConsecutive(Resource):
         return {'result': message["message"]}, message["status"]
 
 
+class UpdateConsecutive(Resource):
+    def put(self, id):
+
+        body = request.get_json(silent=True)
+        service = Consecutive()
+
+        message = service.update(id, body)
+
+        return {'result': message["message"]}, message["status"]
+        
+
+
 class ConsecutiveController(Resource):
 
     def post(self):

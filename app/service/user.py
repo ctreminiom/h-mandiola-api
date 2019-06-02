@@ -55,7 +55,7 @@ class User:
 
             row = cursor.fetchone()
             while row:
-                result.append({'id': decode(row[0]), 'username': decode(row[1]), 'email': decode(row[2]), 'password': decode(row[3])})
+                result.append({'id': decode(row[0]), 'username': decode(row[1]), 'email': decode(row[2])})
                 row = cursor.fetchone()
 
             db.close()

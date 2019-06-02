@@ -179,6 +179,77 @@ class Consecutive:
 
                 return message
 
+    def update(self, id, body):
+
+        try:
+            db = SQL()
+
+            #Get consecutive by ID
+            cursor = db.execute(procedures.get_actual_consecutive.format(encode(id)))
+
+            row = cursor.fetchone()
+
+            if not row:
+                message = {}
+                message["message"] = "The consecutive doesn't exits"
+                message["status"] = 404
+
+                return message
+
+            prefix_on_the_db = decode(row[0])
+            if 'prefix' in body and body["prefix"] == "" and body["has_prefix"] == "true" and prefix_on_the_db == 'true':
+                message = {}
+                message["message"] = "You cannot remove the prefix if the prefix is set as true"
+                message["status"] = 400
+                
+                return message
+
+
+            consecutive_on_the_db = decode(row[5])
+
+            print(consecutive_on_the_db)
+
+            if 'final' in body and int(consecutive_on_the_db) >= int(body["final"]):
+
+                message = {}
+                message["message"] = "You cannot add this final value because this value overwrite the actual consecutive value"
+                message["status"] = 400
+
+                return message
+
+
+            if 'final' in body and int(consecutive_on_the_db) > int(body["final"]):
+                cursor = db.execute(procedures.update_final_consecutive_value.format(encode(id), encode(body["final"])))
+
+                db.commit()
+
+
+            
+            if 'has_range' in body and body["has_range"] == "false":
+
+                ranges_value = encode("null")
+                cursor = db.execute(procedures.update_consecutive_ranges.format(encode(id), ranges_value, ranges_value))
+
+                db.commit()
+
+
+
+            db.close()
+
+            message = {}
+            message["message"] = "Consecutive updated"
+            message["status"] = 200
+
+            return message
+
+
+        except AssertionError as error:
+            message = {}
+            message["message"] = error
+            message["status"] = 500
+
+            return message
+
     def increase(self, id):
         try:
             db = SQL()

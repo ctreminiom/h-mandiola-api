@@ -60,6 +60,24 @@ create procedure dba.get_actual_consecutive @ID varchar(1700)
 as
 select has_prefix, prefix, has_range, initial, final, consecutive from dba.consecutives where ID = @ID;
 
+
+----------------------------------------------------------------
+
+create procedure dba.update_final_consecutive_value @ID varchar(1700), @Final varchar(1700)
+as
+update dba.consecutives set final = @Final where id = @ID;
+
+
+create procedure dba.update_has_range_consecutive_value @ID varchar(1700), @hasRange varchar(1700)
+as 
+update dba.consecutives set has_range = @hasRange where id = @ID;
+
+------------------------
+
+create procedure dba.update_ranges_consecutive_value @ID varchar(1700), @Initial varchar(8000), @Final varchar(8000)
+as
+update dba.consecutives set initial = @Initial, final = @Final where id = @ID;
+
     
 
 
