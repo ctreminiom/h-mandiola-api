@@ -14,6 +14,11 @@ class config:
 
     api_port = 5000
 
+    allowed_extensions = set(['pdf', 'png', 'jpg', 'jpeg'])
+
+    upload_folder = '/home/ctreminio/Documents/h-mandiola-api/images/'
+
+
 
 class procedures:
     insert_consecutive_type = "exec dba.insert_consecutive_type @ID = '{}', @Name = '{}';"
@@ -50,8 +55,13 @@ class procedures:
 
     insert_activity = "exec dba.insert_activity @ID = '{}', @Consecutive = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
 
+    remove_activity = "exec dba.remove_activity @ID = '{}';"
 
+    get_activity_by_ID = "exec dba.get_activity_by_ID @ID = '{}';"
 
+    update_activity_name = "exec dba.update_activity_name @ID = '{}', @Name = '{}';"
+    update_activity_description = "exec dba.update_activity_description @ID = '{}', @Description = '{}';"
+    update_activity_image = "exec dba.update_activity_image @ID = '{}', @Image = '{}';"
 
 
 

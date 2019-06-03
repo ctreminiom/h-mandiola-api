@@ -25,9 +25,11 @@ class GetGrants(Resource):
 
 
 class RemoveGrant(Resource):
-    def delete(self, body):
+    def delete(self):
         body = request.get_json(silent=True)
         service = Grant()
+
+        print(body)
 
         message = service.remove(body)
         return {'result': message["message"]}, message["status"]

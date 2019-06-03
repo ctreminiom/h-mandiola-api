@@ -151,7 +151,10 @@ increment by 1;
 
 create view dba.get_grants
 as
-select * from dba.grants;
+select dba.grants.id, dba.roles.name, dba.users.username
+from dba.grants
+inner join dba.roles on grants.roleID = roles.ID
+inner join dba.users on grants.userID = users.ID;
 --------------------------------------
 
 create procedure dba.get_grants_sequence
@@ -178,7 +181,10 @@ increment by 1;
 
 create view dba.get_activities
 as
-select * from dba.activities;
+select activities.id, dba.consecutives_types.name as consecutive, activities.name, activities.description, activities.image_path
+from dba.activities
+inner join dba.consecutives on activities.consecutive = dba.consecutives.id
+inner join dba.consecutives_types on dba.consecutives.type = dba.consecutives_types.id;
 --------------------------------------
 
 create procedure dba.get_activities_sequence
@@ -190,7 +196,36 @@ create procedure dba.insert_activity @ID varchar(1700), @Consecutive varchar(170
 as
 insert into dba.activities(ID, consecutive, name, description, image_path) 
 values (@ID, @Consecutive, @Name, @Description, @ImagePath);
- 
+----------------------------------------
+
+create procedure dba.remove_activity @ID varchar(1700)
+as
+delete from dba.activities where ID = @ID;
+----------------------------------------
+
+
+create procedure dba.get_activity_by_ID @ID varchar(1700)
+as
+select * from dba.activities where ID = @ID;
+----------------------------------------
+
+create procedure dba.update_activity_name @ID varchar(1700), @Name varchar(8000)
+as
+update dba.activities set name = @Name where id = @ID;
+----------------------------------------
+
+create procedure dba.update_activity_description @ID varchar(1700), @Description varchar(8000)
+as
+update dba.activities set description = @Description where id = @ID;
+
+----------------------------------------
+create procedure dba.update_activity_image @ID varchar(1700), @Image varchar(8000)
+as
+update dba.activities set image_path = @Image where id = @ID;
+
+
+
+
 
 
 
