@@ -6,7 +6,7 @@ import datetime
 
 from config import config
 from functools import wraps
-from flask import request
+from flask import request, jsonify
 
 
 def createToken(user):
@@ -40,18 +40,28 @@ def require(f):
             token = request.headers['x-access-token']
 
         if not token:
-            return {"message": "No Access Token"}, 401
+            resp = jsonify("No Access Token")
+            resp.status_code = 401
+
+            return resp
 
         try:
             data = decode(token)
 
             if data == "expired":
-                return {"message": "Token Expired"}, 401
+                resp = jsonify("Token Expired")
+                resp.status_code = 401
+
+                return resp
+
             #else:
                  #user = User.objects(public_id=data['public_id']).first()
 
         except:
-            return {"message": "Token Invalid"}, 401
+            resp = jsonify("Token Invalid")
+            resp.status_code = 401
+
+            return resp
 
         return f("user", *args, **kwargs)
 

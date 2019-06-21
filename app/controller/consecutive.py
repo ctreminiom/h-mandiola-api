@@ -6,7 +6,7 @@ from flask import request
 
 from app.service.consecutive import Type, Consecutive
 
-from app.middleware.jwt import require
+from app.utils.jwt import require
 
 
 class CreateConsecutiveType(Resource):

@@ -12,9 +12,6 @@ def encode(data):
     return config.encypt_key_1 +  cipher.decode("utf-8") +  config.encypt_key_2
 
 
-
-
-
 def decode(data):
 
     #remove the keys

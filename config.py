@@ -6,7 +6,7 @@ class config:
     db_host = "34.73.78.37"
     db_user = "SA"
     db_passw = "Ulacit123456789"
-    db_name = "ulacit"
+    db_name = "dev"
 
     encypt_key_1 = "atgwYVYMZrNSyDZvWRP6xnMqdkjEPc5LFFma4NDzpHtEgzDUB"
     encypt_key_2 = "mVJCrpg6bZQXPKLcFN9MTfyXZ8NbCYJqWETCyuRJAjnjJfNu3eLypZxDTFmfLZZWf9"
@@ -37,6 +37,12 @@ class procedures:
 
     update_consecutive_ranges = "exec dba.update_ranges_consecutive_value @ID = '{}', @Initial = '{}', @Final = '{}';"
 
+
+
+
+
+
+
     insert_role = "exec dba.insert_role @ID = '{}', @Name = '{}';"
 
     insert_user = """
@@ -52,6 +58,9 @@ class procedures:
 
     insert_grant = "exec dba.insert_grant @ID = '{}', @User = '{}', @Role = '{}';"
     remove_grant = "exec dba.remove_grant @User = '{}', @Role = '{}';"
+    get_grant_by_ID = "exec dba.get_grant_by_ID @ID = '{}';"
+    get_grant_by_user_and_role = "exec dba.get_grant_by_user_and_role @User = '{}', @Role = '{}';"
+
 
     insert_activity = "exec dba.insert_activity @ID = '{}', @Consecutive = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
 

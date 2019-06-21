@@ -1,18 +1,15 @@
------------------------------------------------------------
+--------------------- CONSECUTIVE TYPES --------------------------------------
 create sequence dba.consecutives_types_sequence
 start with 1
 increment by 1;
-
 ----------------------------------------------------
 create view dba.get_consecutives_types 
 as
 select * from dba.consecutives_types;
-
 -----------------------------------------------------
 create procedure dba.get_consecutives_types_sequence
 as
 select next value for dba.consecutives_types_sequence;
-
 --------------------------------------------------------
 create procedure dba.insert_consecutive_type @ID varchar(1700), @Name varchar(8000)
 as
@@ -20,60 +17,44 @@ insert into dba.consecutives_types(ID, name) values (@ID, @Name);
 
 
 
-
-
-
 ----------------------------- CONSECUTIVES --------------------------------------
 create sequence dba.consecutives_sequence
 start with 1
 increment by 1;
-
 ---------------------------------------------------------------
 create view dba.get_consecutives
 as
-select consecutives.id, consecutives_types.name, consecutives.description, consecutives.has_prefix, consecutives.prefix, consecutives.has_range, consecutives.initial, consecutives.final, consecutives.consecutive
+select consecutives.ID, consecutives_types.name, consecutives.description, consecutives.has_prefix, consecutives.prefix, consecutives.has_range, consecutives.initial, consecutives.final, consecutives.consecutive
 from dba.consecutives
 inner join dba.consecutives_types
-on dba.consecutives.type = dba.consecutives_types.id 
-
+on dba.consecutives.consecutive_type = dba.consecutives_types.id 
 --------------------------------------------------------------
 create procedure dba.get_consecutives_sequence
 as
 select next value for dba.consecutives_sequence;
 ----------------------------------------------------------------
-
 create procedure dba.insert_consecutive @ID varchar(1700), @Type varchar(1700), @Description varchar(8000),
     @HasPrefix varchar(8000), @Prefix varchar(8000), @HasRange varchar(8000), @Initial varchar(8000),
     @Final varchar(8000), @Consecutive varchar(8000)
 as
-insert into dba.consecutives(ID, type, description, has_prefix, prefix, has_range, initial, final, consecutive)
+insert into dba.consecutives(ID, consecutive_type, description, has_prefix, prefix, has_range, initial, final, consecutive)
 values (@ID, @Type, @Description, @HasPrefix, @Prefix, @HasRange, @Initial, @Final, @Consecutive);
-
 ----------------------------------------------------------------
 create procedure dba.increase_consecutive @ID varchar(1700), @Consecutive varchar(8000)
 as
 update dba.consecutives set consecutive = @Consecutive where id = @ID;
-
 ----------------------------------------------------------------
-
 create procedure dba.get_actual_consecutive @ID varchar(1700)
 as
 select has_prefix, prefix, has_range, initial, final, consecutive from dba.consecutives where ID = @ID;
-
-
 ----------------------------------------------------------------
-
 create procedure dba.update_final_consecutive_value @ID varchar(1700), @Final varchar(1700)
 as
 update dba.consecutives set final = @Final where id = @ID;
-
-
 create procedure dba.update_has_range_consecutive_value @ID varchar(1700), @hasRange varchar(1700)
 as 
 update dba.consecutives set has_range = @hasRange where id = @ID;
-
 ------------------------
-
 create procedure dba.update_ranges_consecutive_value @ID varchar(1700), @Initial varchar(8000), @Final varchar(8000)
 as
 update dba.consecutives set initial = @Initial, final = @Final where id = @ID;
@@ -165,11 +146,22 @@ select next value for dba.grants_sequence;
 create procedure dba.insert_grant @ID varchar(1700), @User varchar(1700), @Role varchar(1700)
 as
 insert into dba.grants(ID, userID, roleID)  values (@ID, @User, @Role);
+----------------------------------------
 
 
 create procedure dba.remove_grant @User varchar(1700), @Role varchar(1700)
 as
 delete from dba.grants where userID = @User and roleID = @Role;
+----------------------------------------
+
+create procedure dba.get_grant_by_ID @ID varchar(1700)
+as
+select * from dba.grants where id = @ID;
+----------------------------------------
+
+create procedure dba.get_grant_by_user_and_role @User varchar(1700), @Role varchar(1700)
+as
+select * from dba.grants where userID = @User and roleID = @Role;
 
 
 

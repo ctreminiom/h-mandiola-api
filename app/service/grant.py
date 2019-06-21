@@ -78,6 +78,18 @@ class Grant:
         try:
             db = SQL()
 
+            #Get grant by User and Role
+            cursor = db.execute(procedures.get_grant_by_user_and_role.format(encode(body["user"]), encode(body["role"])))
+            row = cursor.fetchone()
+
+            if not row:
+                message = {}
+                message["message"] = "The grant doesn't exits"
+                message["status"] = 404
+
+                return message
+
+
             #Delete grant
             db.execute(procedures.remove_grant.format(encode(body["user"]), encode(body["role"])))
 
