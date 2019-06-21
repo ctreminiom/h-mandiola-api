@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "dcc2b389-7afd-45e1-aa8b-c1a78a7e9dbf",
+		"name": "H-Mandiola",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get consecutives types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/consecutive/types",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"consecutive",
+						"types"
+					]
+				},
+				"description": "Create a new consecutive type"
+			},
+			"response": []
+		},
+		{
+			"name": "Create a consecutive type",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Bitacora\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/consecutive/type",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"consecutive",
+						"type"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all consecutives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/consecutives",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"consecutives"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new consecutive",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"6\",\n\t\"description\": \"Consecutivo de las bitacoras\",\n\t\"has_prefix\": \"true\",\n\t\"prefix\": \"ACS\",\n\t\"has_range\": \"true\",\n\t\"initial\": \"1\",\n\t\"final\": \"10000\",\n\t\"consecutive\": \"0\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/consecutive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"consecutive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new activity",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "consecutive",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Actividad #1",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Description example",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/ctreminio/Desktop/index.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/activity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"activity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all activities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/activities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete activity",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/activity/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"activity",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update activity",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\": \"adasdsadsadas\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/activity/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"activity",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Activity Image",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/ctreminio/Desktop/test.py"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/activity/image/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"activity",
+						"image",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/roles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Grants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/grants",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"grants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Grant",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"2\",\n\t\"role\": \"3\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/grant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"grant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/user?username=admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"user"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Grant",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"2\",\n\t\"role\": \"3\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/remove/grant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"remove",
+						"grant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
