@@ -87,7 +87,7 @@ GO;
 create procedure dbo.get_user
     @Username varchar(8000)
 as
-select ID, username, email, security_question
+select ID, username, [password], email, security_question
 from dbo.users
 where username = @Username;
 GO;

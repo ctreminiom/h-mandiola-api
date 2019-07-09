@@ -27,6 +27,9 @@ app.register_blueprint(error_module)
 from app.modules.user.route import user_module
 app.register_blueprint(user_module)
 
+from app.modules.login.route import login_module
+app.register_blueprint(login_module)
+
 
 checkOut()
 
