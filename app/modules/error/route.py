@@ -1,12 +1,12 @@
-from flask import Blueprint, request, jsonify
-from app.utils.jwt import require
 from app.modules.error.service import Error
+from flask import Blueprint, request, jsonify
+
 
 error_module = Blueprint('error_module', __name__)
 
 
 @error_module.route('/api/module/errors', methods=['GET'])
-#@require
+# @require
 def getAll():
     service = Error()
 

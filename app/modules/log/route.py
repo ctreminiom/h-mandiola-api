@@ -1,12 +1,12 @@
-from flask import Blueprint, request, jsonify
-from app.utils.jwt import require
 from app.modules.log.service import Log
+from flask import Blueprint, request, jsonify
+
 
 log_module = Blueprint('log_module', __name__)
 
 
 @log_module.route('/api/module/logs', methods=['GET'])
-#@require
+# @require
 def getAll():
     service = Log()
 

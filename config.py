@@ -1,104 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-class config:
+class configuration:
 
-    db_host = "34.73.78.37"
-    db_user = "SA"
-    db_passw = "Ulacit123456789"
-    db_name = "dev"
+    host = "35.188.37.134"
+    user = "SA"
+    passw = "Ulacit123456789"
+    name = "ulacit"
 
-    encypt_key_1 = "atgwYVYMZrNSyDZvWRP6xnMqdkjEPc5LFFma4NDzpHtEgzDUB"
-    encypt_key_2 = "mVJCrpg6bZQXPKLcFN9MTfyXZ8NbCYJqWETCyuRJAjnjJfNu3eLypZxDTFmfLZZWf9"
-    jwt_key = "LWwP5EGuSU38VN9JgmHcvpPUtsxm9sXXqeQUJWRANzCHHLHr62Nk83NWSwuPedpk6HZKsYuVmZAHRCjmLE3MQrmcJz9j7EWWYFsy2GfKmNnqhrSgnSq"
+    first_key = "BA2gnz"
+    last_key = "K3k8qM"
 
-    api_port = 5000
+    port = 9090
 
     allowed_extensions = set(['pdf', 'png', 'jpg', 'jpeg'])
-
-    upload_folder = '/home/ctreminio/Documents/h-mandiola-api/images/'
-
-
-
-class procedures:
-    insert_consecutive_type = "exec dba.insert_consecutive_type @ID = '{}', @Name = '{}';"
-
-    insert_consecutive = """
-    exec dba.insert_consecutive @ID = '{}', @Type = '{}', @Description = '{}', @HasPrefix = '{}',
-    @Prefix = '{}', @HasRange = '{}', @Initial = '{}', @Final = '{}', @Consecutive = '{}';
-    """
-
-    increase_consecutive = "exec dba.increase_consecutive @ID = '{}', @Consecutive = '{}';"
-    get_actual_consecutive = "exec dba.get_actual_consecutive @ID = '{}';"
-
-
-    update_final_consecutive_value = "exec dba.update_final_consecutive_value @ID = '{}', @Final = '{}';"
-    update_has_range_consecutive_value = "exec dba.update_has_range_consecutive_value @ID = '{}', @hasRange = '{}';"
-
-    update_consecutive_ranges = "exec dba.update_ranges_consecutive_value @ID = '{}', @Initial = '{}', @Final = '{}';"
-
-
-
-
-
-
-
-    insert_role = "exec dba.insert_role @ID = '{}', @Name = '{}';"
-
-    insert_user = """
-    exec dba.insert_user @ID = '{}', @Username = '{}', @Email = '{}', @Password = '{}',
-    @Security_Question = '{}', @Security_Answer = '{}';
-    """
-
-    change_user_password = "exec dba.change_password @Username = '{}', @NewPassword = '{}';"
-
-    get_user_by_username = "exec dba.get_user_by_username @Username = '{}';"
-    get_user_by_email = "exec dba.get_user_by_email @Email = '{}';"
-
-
-    insert_grant = "exec dba.insert_grant @ID = '{}', @User = '{}', @Role = '{}';"
-    remove_grant = "exec dba.remove_grant @User = '{}', @Role = '{}';"
-    get_grant_by_ID = "exec dba.get_grant_by_ID @ID = '{}';"
-    get_grant_by_user_and_role = "exec dba.get_grant_by_user_and_role @User = '{}', @Role = '{}';"
-
-
-    insert_activity = "exec dba.insert_activity @ID = '{}', @Consecutive = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
-
-    remove_activity = "exec dba.remove_activity @ID = '{}';"
-
-    get_activity_by_ID = "exec dba.get_activity_by_ID @ID = '{}';"
-
-    update_activity_name = "exec dba.update_activity_name @ID = '{}', @Name = '{}';"
-    update_activity_description = "exec dba.update_activity_description @ID = '{}', @Description = '{}';"
-    update_activity_image = "exec dba.update_activity_image @ID = '{}', @Image = '{}';"
-
-
-
-class sequences:
-    consecutive_type = "exec dba.get_consecutives_types_sequence;"
-    consecutive = "exec dba.get_consecutives_sequence;"
-    role = "exec dba.get_roles_sequence;"
-    user = "exec dba.get_users_sequence;"
-    grant = "exec dba.get_grants_sequence;"
-    activity = "exec dba.get_activities_sequence;"
-
-
-class views:
-    gets_consecutives_types = "select * from dba.get_consecutives_types;"
-    gets_consecutives = "select * from dba.get_consecutives;"
-    get_roles = "select * from dba.get_roles;"
-    get_users = "select * from dba.users;"
-    get_grants = "select * from dba.get_grants;"
-    get_activities = "select * from dba.get_activities;"
-
-
-
-
-
-
-
-
-
-
-
-
