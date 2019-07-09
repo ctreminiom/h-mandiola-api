@@ -49,3 +49,11 @@ class role:
     insert = "exec dbo.insert_role @ID = '{}', @Name = '{}';"
     getAll = "select * from dbo.get_roles;"
     nextID = "exec dbo.get_roles_sequence;"
+
+class user:
+    insert = "exec dbo.insert_user @ID = '{}', @Username = '{}', @Email = '{}', @Password = '{}', @Security_Question = '{}', @Security_Answer = '{}';"
+    getAll = "select * from dbo.get_users;"
+    nextID = "exec dbo.get_users_sequence;"
+    getUser = "exec dbo.get_user @Username = '{}'"
+
+    

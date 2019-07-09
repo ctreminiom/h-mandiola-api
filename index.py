@@ -24,9 +24,13 @@ from app.modules.error.route import error_module
 app.register_blueprint(error_module)
 
 
+from app.modules.user.route import user_module
+app.register_blueprint(user_module)
+
+
 checkOut()
 
     
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=configuration.port, debug=False)
+    app.run(host="0.0.0.0", port=configuration.port, debug=True)
 
