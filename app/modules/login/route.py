@@ -17,7 +17,4 @@ def login():
 
     message = service.authenticate(main_dict)
 
-    resp = jsonify(message["message"])
-    resp.status_code = message["status"]
-
-    return resp
+    return jsonify(message["message"]), message["status"]

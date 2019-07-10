@@ -31,11 +31,7 @@ class Log:
 
             database.close()
 
-            message = {}
-            message["message"] = log_json
-            message["status"] = 200
-
-            return message
+            return {'message': log_json, 'status': 200}
 
         except Exception as err:
 
@@ -61,8 +57,4 @@ class Log:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}

@@ -9,10 +9,8 @@ class Grant:
     def get(self, data):
 
         try:
-            if 'username' not in data:
 
-                message = {"message": "Please set a username role value", "status": 400}
-                return message
+            if 'username' not in data: return {'message': "username field is required", 'status': 400}
             
             database = SQL()
             cursor = database.execute(grant.getGrant.format(encrypt(data["username"])))
@@ -21,13 +19,12 @@ class Grant:
 
             row = cursor.fetchone()
             while row:
-                grant_json.append({'id': decrypt(row[0]), 'user': decrypt(row[1]), 'role': decrypt(row[2])})
+                grant_json.append({'id': decrypt(row[0]), 'user': decrypt(row[2]), 'role': decrypt(row[1])})
                 row = cursor.fetchone()
 
             database.close()
 
-            message = {"message": grant_json, "status": 200}
-            return message
+            return {'message': grant_json, 'status': 200}
 
         except pymssql.Error as err:
 
@@ -53,11 +50,7 @@ class Grant:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}
 
     def create(self, data):
         try:
@@ -99,11 +92,7 @@ class Grant:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = "The Grant has been created"
-            message["status"] = 201
-
-            return message
+            return {'message': "The grant has been created", 'status': 201}
 
 
         except pymssql.Error as err:
@@ -129,8 +118,7 @@ class Grant:
             database.commit()
             database.close()
 
-            message = {"message": str(err), "status": 500}
-            return message
+            return {'message': str(err), 'status': 500}
 
 
     def remove(self, data):
@@ -141,8 +129,7 @@ class Grant:
             database.commit()
             database.close()
 
-            message = {"message": "Grant removedd", "status": 202}
-            return message
+            return {"message": "Grant removedd", "status": 202}
 
 
         except pymssql.Error as err:
@@ -168,5 +155,4 @@ class Grant:
             database.commit()
             database.close()
 
-            message = {"message": str(err), "status": 500}
-            return message
+            return {'message': str(err), 'status': 500}

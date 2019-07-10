@@ -30,11 +30,7 @@ class Error:
 
             database.close()
 
-            message = {}
-            message["message"] = error_json
-            message["status"] = 200
-
-            return message
+            return {'message': error_json, 'status': 200}
 
         except Exception as err:
 
@@ -60,8 +56,4 @@ class Error:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}

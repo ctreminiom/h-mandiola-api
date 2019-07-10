@@ -28,11 +28,7 @@ class Role:
 
             database.close()
 
-            message = {}
-            message["message"] = role_json
-            message["status"] = 200
-
-            return message
+            return {'message': role_json, 'status': 200}
 
         except Exception as err:
 
@@ -47,7 +43,7 @@ class Role:
                 date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
             id_encrypted = encrypt(row[0])
-            username_encrypted = encrypt(data["username"])
+            username_encrypted = encrypt(data["jwt_user"])
             date_encrypted = encrypt(str(date_time_obj))
             detail_encrypted = encrypt(str(err))
 
@@ -58,24 +54,14 @@ class Role:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}
 
     def create(self, data):
 
         try:
 
             # validate the input
-            if 'name' not in data:
-
-                message = {}
-                message["message"] = "Please set a name role value"
-                message["status"] = 400
-
-                return message
+            if 'name' not in data: return {'message': "name field is required", 'status': 400}
 
             database = SQL()
 
@@ -100,7 +86,7 @@ class Role:
                 date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
             id_encrypted = encrypt(str(row[0]))
-            username_encrypted = encrypt(data["username"])
+            username_encrypted = encrypt(data["jwt_user"])
             date_encrypted = encrypt(str(date_time_obj))
             code_encrypted = encrypt("INSERT")
 
@@ -115,11 +101,7 @@ class Role:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = "The Role has been created"
-            message["status"] = 201
-
-            return message
+            return {'message': 'The role has been created', 'status': 201}
 
         except Exception as err:
 
@@ -134,7 +116,7 @@ class Role:
                 date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
             id_encrypted = encrypt(row[0])
-            username_encrypted = encrypt(data["username"])
+            username_encrypted = encrypt(data["jwt_user"])
             date_encrypted = encrypt(str(date_time_obj))
             detail_encrypted = encrypt(str(err))
 
@@ -145,8 +127,4 @@ class Role:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}

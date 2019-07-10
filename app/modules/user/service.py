@@ -30,11 +30,7 @@ class User:
 
             database.close()
 
-            message = {}
-            message["message"] = user_json
-            message["status"] = 200
-
-            return message
+            return {'message': user_json, 'status': 200}
 
         except pymssql.Error as err:
 
@@ -60,56 +56,16 @@ class User:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}
 
     def create(self, data):
 
         try:
 
-            # validate the input
-            if 'username' not in data:
-
-                message = {}
-                message["message"] = "Please set a username role value"
-                message["status"] = 400
-
-                return message
-
-            if 'email' not in data:
-
-                message = {}
-                message["message"] = "Please set a email role value"
-                message["status"] = 400
-
-                return message
-
-            if 'password' not in data:
-
-                message = {}
-                message["message"] = "Please set a password role value"
-                message["status"] = 400
-
-                return message
-
-            if 'security_question' not in data:
-
-                message = {}
-                message["message"] = "Please set a security_question role value"
-                message["status"] = 400
-
-                return message
-
-            if 'security_answer' not in data:
-
-                message = {}
-                message["message"] = "Please set a security_answer role value"
-                message["status"] = 400
-
-                return message
+            if 'username' not in data: return {'message': 'username file is required', 'status': 400}
+            if 'email' not in data: return {'message': 'email file is required', 'status': 400}
+            if 'security_question' not in data: return {'message': 'security_question file is required', 'status': 400}
+            if 'security_answer' not in data: return {'message': 'security_answer file is required', 'status': 400}
 
             database = SQL()
 
@@ -153,11 +109,7 @@ class User:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = "The User has been created"
-            message["status"] = 201
-
-            return message
+            return {'message': "The user has been created", 'status': 201}
 
         except pymssql.Error as err:
             database = SQL()
@@ -182,11 +134,7 @@ class User:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}
 
     def getByUsername(self, data):
 
@@ -196,12 +144,7 @@ class User:
             cursor = database.execute(user.getUser.format(encrypt(data["username"])))
             row = cursor.fetchone()
 
-            if not row:
-                message = {}
-                message["message"] = "The username doesn't exits"
-                message["status"] = 404
-
-                return message
+            if not row: return {'message': "The username doesn't exits", 'status': 404}
 
             result = []
             while row:
@@ -210,11 +153,7 @@ class User:
 
             database.close()
 
-            message = {}
-            message["message"] = result
-            message["status"] = 200
-
-            return message
+            return {'message': result, 'status': 200}
 
         except pymssql.Error as err:
 
@@ -240,8 +179,4 @@ class User:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {'message': str(err), 'status': 500}

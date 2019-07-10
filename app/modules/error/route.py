@@ -1,21 +1,19 @@
 from app.modules.error.service import Error
 from flask import Blueprint, request, jsonify
+from app.utils.jwt import protected, queryOnly
+
 
 
 error_module = Blueprint('error_module', __name__)
 
 
 @error_module.route('/api/module/errors', methods=['GET'])
-# @require
-def getAll():
+@protected
+@queryOnly
+def getAll(data):
     service = Error()
 
-    data = {}
-    data["username"] = "cjt9"
-
+    data = {"jwt_user": data['username']}
     message = service.getAll(data)
 
-    resp = jsonify(message["message"])
-    resp.status_code = message["status"]
-
-    return resp
+    return jsonify(message["message"]), message["status"]

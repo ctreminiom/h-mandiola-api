@@ -1,21 +1,19 @@
 from app.modules.log.service import Log
 from flask import Blueprint, request, jsonify
 
+from app.utils.jwt import protected, queryOnly
+
 
 log_module = Blueprint('log_module', __name__)
 
-
 @log_module.route('/api/module/logs', methods=['GET'])
-# @require
-def getAll():
+@protected
+@queryOnly
+def getAll(data):
     service = Log()
 
-    data = {}
-    data["username"] = "cjt9"
+    data = {"jwt_user": data['username']}
 
     message = service.getAll(data)
 
-    resp = jsonify(message["message"])
-    resp.status_code = message["status"]
-
-    return resp
+    return jsonify(message["message"]), message["status"]

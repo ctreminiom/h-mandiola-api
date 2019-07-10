@@ -2,6 +2,8 @@ from app.utils.database import SQL, user, error, log
 from app.utils.encryt import encrypt, decrypt
 from app.utils.jwt import create
 
+from app.modules.grant.service import Grant
+
 import datetime, pymssql
 
 
@@ -25,25 +27,33 @@ class Login:
 
                 if username == data["username"] and password == data["password"]:
 
+                    service = Grant()
+                    data["jwt_user"] = "admin"
+
+                    message = service.get(data)
+
                     token_payload = {
                         'user': data["username"],
-                        'admin': True,
-                        'consecutive': True,
-                        'security': True,
-                        'queries': True
+                        'admin': False,
+                        'consecutive': False,
+                        'security': False,
+                        'queries': False
                     }
 
-                    print("-----------------------")
-                    print(token_payload)
-                    print("-----------------------")
+                    for i in range(len(message["message"])):
+
+                        role = message["message"][i]["role"]
+
+                        if role == 'admin': token_payload["admin"] = True
+                        if role == 'consecutive': token_payload["consecutive"] = True
+                        if role == 'security': token_payload["security"] = True
+                        if role == 'queries': token_payload["queries"] = True
 
                     token = create(token_payload)
 
-                    message = {"message": token, "status": 201}
-                    return message
+                    return {'message': token, 'status': 201}
 
-                message = {"message": "Username or password incorrect", "status": 400}
-                return message
+                return {"message": "Username or password incorrect", "status": 400}
             
         except pymssql.Error as err:
 
@@ -69,8 +79,4 @@ class Login:
             database.commit()
             database.close()
 
-            message = {}
-            message["message"] = str(err)
-            message["status"] = 500
-
-            return message
+            return {"message": str(err), "status": 500}

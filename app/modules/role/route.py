@@ -1,41 +1,34 @@
 from app.modules.role.service import Role
 from flask import Blueprint, request, jsonify
-
+from app.utils.jwt import protected, adminOnly
 
 role_module = Blueprint('role_module', __name__)
 
 @role_module.route('/api/module/role', methods=['POST'])
-def create():
+@protected
+@adminOnly
+def create(data):
     service = Role()
 
     body = request.get_json(silent=True)
 
-    data = {}
-    data["username"] = "cjt9"
-
+    data = {"jwt_user": data['username']}
     main_dict = {**body, **data}
-
-    print(main_dict)
 
     message = service.create(main_dict)
 
-    resp = jsonify(message["message"])
-    resp.status_code = message["status"]
-
-    return resp
+    return jsonify(message["message"]), message["status"]
 
 
 
 @role_module.route('/api/module/roles', methods=['GET'])
-def getAll():
+@protected
+@adminOnly
+def getAll(data):
     service = Role()
 
-    data = {}
-    data["username"] = "cjt9"
+    data = {"jwt_user": data['username']}
 
     message = service.getAll(data)
 
-    resp = jsonify(message["message"])
-    resp.status_code = message["status"]
-
-    return resp
+    return jsonify(message["message"]), message["status"]

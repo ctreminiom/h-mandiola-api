@@ -1,7 +1,6 @@
 from config import configuration as conf
 from functools import wraps
 from flask import request, jsonify
-
 import jwt, datetime
 
 
@@ -26,43 +25,150 @@ def create(data):
 def check(token):
     try:
         return jwt.decode(token, conf.jwt)
-    except jwt.ExpiredSignature:
-        return "expired"
+    except jwt.ExpiredSignature as err:
+        return str(err)
 
-
-
-def require(f):
+def protected(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
 
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+            token_cleared = token.replace('Bearer ', '')
+            token = token_cleared
 
         if not token:
-            resp = jsonify("No Access Token")
-            resp.status_code = 401
-
-            return resp
+            return jsonify({'message': "no access token"}), 403
 
         try:
-            data = decode(token)
+            data = check(token)
+            if data == "expired": return jsonify({'message': "token expired"}), 403
+        except:
+            return jsonify({'message': "token Invalid"}), 403
 
-            if data == "expired":
-                resp = jsonify("Token Expired")
-                resp.status_code = 401
+        return f(data, *args, **kwargs)
 
-                return resp
+    return decorated
 
-            #else:
-                 #user = User.objects(public_id=data['public_id']).first()
+
+def adminOnly(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+            token_cleared = token.replace('Bearer ', '')
+            token = token_cleared
+
+        if not token:
+            return jsonify({'message': "no access token"}), 403
+
+        try:
+            data = check(token)
+            if data == "expired": return jsonify({'message': "token expired"}), 403
+
+            if  data['admin']:
+                return f(*args, **kwargs)
+            else:
+                return jsonify({'message': 'unauthorized'}), 401
 
         except:
-            resp = jsonify("Token Invalid")
-            resp.status_code = 401
+            return jsonify({'message': "token Invalid"}), 403
 
-            return resp
+        return f(*args, **kwargs)
 
-        return f("user", *args, **kwargs)
+    return decorated
+
+
+def securityOnly(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+            token_cleared = token.replace('Bearer ', '')
+            token = token_cleared
+
+        if not token:
+            return jsonify({'message': "no access token"}), 403
+
+        try:
+            data = check(token)
+            if data == "expired": return jsonify({'message': "token expired"}), 403
+
+            if data['security'] or data['admin']:
+                return f(*args, **kwargs)
+            else:
+                return jsonify({'message': 'unauthorized'}), 401
+
+        except:
+            return jsonify({'message': "token Invalid"}), 403
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+
+def consecutiveOnly(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+            token_cleared = token.replace('Bearer ', '')
+            token = token_cleared
+
+        if not token:
+            return jsonify({'message': "no access token"}), 403
+
+        try:
+            data = check(token)
+            if data == "expired": return jsonify({'message': "token expired"}), 403
+
+            if data['consecutive'] or data['admin']:
+                return f(*args, **kwargs)
+            else:
+                return jsonify({'message': 'unauthorized'}), 401
+
+        except:
+            return jsonify({'message': "token Invalid"}), 403
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+
+def queryOnly(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+            token_cleared = token.replace('Bearer ', '')
+            token = token_cleared
+
+        if not token:
+            return jsonify({'message': "no access token"}), 403
+
+        try:
+            data = check(token)
+            if data == "expired": return jsonify({'message': "token expired"}), 403
+
+            print(data['queries'])
+
+            if data['queries'] == True or data['admin'] == True:
+                print("asss")
+            else:
+                return jsonify({'message': 'unauthorized'}), 401
+
+        except:
+            return jsonify({'message': "token Invalid"}), 403
+
+        return f(*args, **kwargs)
 
     return decorated
