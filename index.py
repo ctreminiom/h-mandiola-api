@@ -31,6 +31,10 @@ from app.modules.login.route import login_module
 app.register_blueprint(login_module)
 
 
+from app.modules.grant.route import grant_module
+app.register_blueprint(grant_module)
+
+
 checkOut()
 
     

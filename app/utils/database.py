@@ -56,4 +56,11 @@ class user:
     nextID = "exec dbo.get_users_sequence;"
     getUser = "exec dbo.get_user @Username = '{}'"
 
-    
+class grant:
+    insert = "exec dbo.insert_grant @ID = '{}', @User = '{}', @Role = '{}';" 
+    getGrant = "exec dbo.get_grant @Username = '{}';"
+    nextID = "exec dbo.get_grants_sequence;"
+    removeGrant = "exec dbo.remove_grant = @User = '{}', @Role = '{}';"
+
+
+
