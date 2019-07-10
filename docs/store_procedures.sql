@@ -2,15 +2,18 @@
 ---------------------- ROLES ---------------------------------
 create sequence dbo.roles_sequence start with 1 increment by 1;
 GO;
+
 create view dbo.get_roles
 as
     select *
     from dbo.roles;
 GO;
+
 create procedure dbo.get_roles_sequence
 as
 select next value for dbo.roles_sequence;
 GO;
+
 create procedure dbo.insert_role
     @ID varchar(900),
     @Name varchar(8000)
@@ -154,3 +157,34 @@ GO;
 
 ---------------------- GRANT ---------------------------------
 
+
+
+
+
+
+---------------------- CONSECUTIVES_TYPES ---------------------------------
+create sequence dbo.consecutives_types_sequence start with 1 increment by 1;
+GO;
+
+create procedure dbo.get_consecutives_types_sequence
+as
+select next value for dbo.consecutives_types_sequence;
+GO;
+
+create view dbo.get_consecutives_types
+as
+    select * from dbo.consecutives_types;
+GO;
+
+create procedure dbo.insert_consecutive_type
+    @ID varchar(900),
+    @Name varchar(8000)
+as
+insert into dbo.consecutives_types
+    (ID, name)
+values
+    (@ID, @Name);
+GO;
+
+
+---------------------- CONSECUTIVES_TYPES ---------------------------------

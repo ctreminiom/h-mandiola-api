@@ -44,7 +44,7 @@ class Login:
 
                         role = message["message"][i]["role"]
 
-                        if role == 'admin': token_payload["admin"] = True
+                        if role == 'Administracion': token_payload["admin"] = True
                         if role == 'consecutive': token_payload["consecutive"] = True
                         if role == 'security': token_payload["security"] = True
                         if role == 'queries': token_payload["queries"] = True

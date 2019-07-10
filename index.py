@@ -34,6 +34,9 @@ application.register_blueprint(login_module)
 from app.modules.grant.route import grant_module
 application.register_blueprint(grant_module)
 
+from app.modules.consecutiveType.router import type_module
+application.register_blueprint(type_module)
+
 
 checkOut()
 

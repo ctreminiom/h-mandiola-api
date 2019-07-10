@@ -74,8 +74,9 @@ def adminOnly(f):
             else:
                 return jsonify({'message': 'unauthorized'}), 401
 
-        except:
-            return jsonify({'message': "token Invalid"}), 403
+        except Exception as err:
+            print(err)
+            return jsonify({'message': str(err)}), 403
 
         return f(*args, **kwargs)
 

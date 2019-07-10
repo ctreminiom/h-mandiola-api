@@ -63,4 +63,10 @@ class grant:
     removeGrant = "exec dbo.remove_grant = @User = '{}', @Role = '{}';"
 
 
+class consecutiveType:
+    insert = "exec dbo.insert_consecutive_type @ID = '{}', @Name = '{}';"
+    getAll = "select * from dbo.get_consecutives_types;"
+    nextID = "exec dbo.get_consecutives_types_sequence;"
+
+
 
