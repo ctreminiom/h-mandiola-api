@@ -4,7 +4,10 @@ from flask_restful import Resource, Api
 from config import configuration
 from app.utils.database import checkOut
 
+from flask_cors import CORS
+
 application = Flask(__name__)
+CORS(application)
 
 @application.route("/")
 def hello():
