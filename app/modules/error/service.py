@@ -1,8 +1,7 @@
 from app.utils.database import SQL, log, error
 from app.utils.encryt import encrypt, decrypt
 
-import datetime
-
+import pymssql, datetime
 
 class Error:
 
@@ -32,28 +31,29 @@ class Error:
 
             return {'message': error_json, 'status': 200}
 
-        except Exception as err:
+        except pymssql.Error as err:
+            context = {"database": database,
+                       "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)
 
-            database = SQL()
 
-            # Get next ID
-            cursor = database.execute(error.nextID)
-            row = cursor.fetchone()
+def insertError(context):
 
-            date_time_str = '2018-06-29 08:15:27.243860'
-            date_time_obj = datetime.datetime.strptime(
-                date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+    database = context["database"]
 
-            id_encrypted = encrypt(row[0])
-            username_encrypted = encrypt(data["username"])
-            date_encrypted = encrypt(str(date_time_obj))
-            detail_encrypted = encrypt(str(err))
+    cursor = database.execute(error.nextID)
+    row = cursor.fetchone()
 
-            # Insert the error
-            cursor = database.execute(error.insert.format(
-                id_encrypted, username_encrypted, date_encrypted, detail_encrypted))
+    id = encrypt(str(row[0]))
+    username = encrypt(context["jwt_user"])
+    date = encrypt(datetime.datetime.now().replace(microsecond=0).isoformat())
 
-            database.commit()
-            database.close()
+    err = context["err"]
+    detail = encrypt(str(err))
 
-            return {'message': str(err), 'status': 500}
+    cursor = database.execute(error.insert.format(id,username,date,detail))
+
+    database.commit()
+    database.close()
+
+    return {'message': str(err), 'status': 500}

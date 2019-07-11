@@ -31,7 +31,7 @@ def getAll(data):
     service = User()
 
     data = {"jwt_user": data['username']}
-    message = service.getAll(data)
+    message = service.gets(data)
 
     return jsonify(message["message"]), message["status"]
 
@@ -47,7 +47,7 @@ def getByUsername(data):
 
     data = {"jwt_user": data['username'], 'username': args['username']}
 
-    message = service.getByUsername(data)
+    message = service.get(data)
 
     return jsonify(message["message"]), message["status"]
 

@@ -1,26 +1,23 @@
 from app.utils.database import SQL, log, error
 from app.utils.encryt import encrypt, decrypt
+from app.modules.error.service import insertError
 
-import datetime
+
+import datetime, pymssql
 
 
 class Log:
 
     def getAll(self, data):
-
         try:
-
             database = SQL()
-
-            # Get all logs encrypted
             cursor = database.execute(log.getAll)
 
-            log_json = []
-
+            result = []
             row = cursor.fetchone()
             while row:
 
-                log_json.append({'username': decrypt(row[1]),
+                result.append({'username': decrypt(row[1]),
                                  'id': decrypt(row[0]),
                                  'date': decrypt(row[2]),
                                  'code': decrypt(row[3]),
@@ -31,30 +28,29 @@ class Log:
 
             database.close()
 
-            return {'message': log_json, 'status': 200}
+            return {'message': result, 'status': 200}
 
-        except Exception as err:
+        except pymssql.Error as err:
+            context = {"database": database,
+                       "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)
 
-            database = SQL()
 
-            # Get next ID
-            cursor = database.execute(error.nextID)
-            row = cursor.fetchone()
+def insertLog(context):
 
-            date_time_str = '2018-06-29 08:15:27.243860'
-            date_time_obj = datetime.datetime.strptime(
-                date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+    database = context["database"]
 
-            id_encrypted = encrypt(row[0])
-            username_encrypted = encrypt(data["username"])
-            date_encrypted = encrypt(str(date_time_obj))
-            detail_encrypted = encrypt(str(err))
+    cursor = database.execute(log.nextID)
+    row = cursor.fetchone()
 
-            # Insert the error
-            cursor = database.execute(error.insert.format(
-                id_encrypted, username_encrypted, date_encrypted, detail_encrypted))
+    id = encrypt(str(row[0]))
+    username = encrypt(context["jwt_user"])
+    date = encrypt(datetime.datetime.now().replace(microsecond=0).isoformat())
+    code = encrypt(context["code"])
 
-            database.commit()
-            database.close()
+    message = "Table = {} || ID = {} || User = {}"
+    detail = encrypt(message.format(context["table"], context["id"], context["user"]))
 
-            return {'message': str(err), 'status': 500}
+
+    cursor = database.execute(log.insert.format(id, username, code, date, detail))
+

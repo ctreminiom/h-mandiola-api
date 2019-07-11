@@ -13,7 +13,7 @@ def create(data):
         'consecutive': data["consecutive"],
         'security': data["security"],
         'queries': data["queries"],
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=120),
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=500),
         'iat': datetime.datetime.utcnow(),
     }
 
@@ -105,7 +105,8 @@ def securityOnly(f):
             else:
                 return jsonify({'message': 'unauthorized'}), 401
 
-        except:
+        except Exception as err:
+            print(err)
             return jsonify({'message': "token Invalid"}), 403
 
         return f(*args, **kwargs)

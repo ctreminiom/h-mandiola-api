@@ -1,6 +1,7 @@
-from app.modules.grant.service import Grant
 from flask import Blueprint, request, jsonify
 from app.utils.jwt import protected, adminOnly
+
+from app.modules.grant.service import Grant
 
 
 grant_module = Blueprint('grant_module', __name__)

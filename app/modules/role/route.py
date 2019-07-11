@@ -29,6 +29,6 @@ def getAll(data):
 
     data = {"jwt_user": data['username']}
 
-    message = service.getAll(data)
+    message = service.gets(data)
 
     return jsonify(message["message"]), message["status"]

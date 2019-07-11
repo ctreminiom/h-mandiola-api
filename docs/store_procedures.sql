@@ -173,7 +173,8 @@ GO;
 
 create view dbo.get_consecutives_types
 as
-    select * from dbo.consecutives_types;
+    select *
+    from dbo.consecutives_types;
 GO;
 
 create procedure dbo.insert_consecutive_type
@@ -185,6 +186,61 @@ insert into dbo.consecutives_types
 values
     (@ID, @Name);
 GO;
-
-
 ---------------------- CONSECUTIVES_TYPES ---------------------------------
+
+
+
+
+
+---------------------- CONSECUTIVES--------------------------------
+create sequence dbo.consecutives_sequence start with 1 increment by 1;
+GO;
+
+create procedure dbo.get_consecutives_sequence
+as
+select next value for dbo.consecutives_sequence;
+GO;
+
+create view dbo.get_consecutives
+as
+    select dbo.consecutives.ID, dbo.consecutives_types.name, dbo.consecutives.description, dbo.consecutives.has_prefix, dbo.consecutives.prefix, dbo.consecutives.has_range, dbo.consecutives.initial, dbo.consecutives.[final]
+    from dbo.consecutives
+        inner join dbo.consecutives_types on dbo.consecutives.consecutive_type_ID = dbo.consecutives_types.ID;
+GO;
+
+create procedure dbo.insert_consecutive
+    @ID varchar(900),
+    @ConsecutiveType varchar(900),
+    @Description varchar(8000),
+    @HasPrefix	varchar(8000),
+    @Prefix varchar(8000),
+    @HasRange varchar(8000),
+    @Initial varchar(8000),
+    @Final varchar(8000)
+as
+insert into dbo.consecutives
+    (ID, consecutive_type_ID, description, has_prefix, prefix, has_range, initial, [final])
+values
+    (@ID, @ConsecutiveType, @Description , @HasPrefix, @Prefix, @HasRange, @Initial, @Final);
+GO;
+
+create procedure dbo.update_has_prefix
+    @ID varchar(900),
+    @HasPrefix varchar(8000)
+as
+update dbo.consecutives set has_prefix = @HasPrefix where ID = @ID;
+GO;
+
+
+create procedure dbo.get_consecutive
+    @ID varchar(900)
+as
+select dbo.consecutives.ID, dbo.consecutives_types.name, dbo.consecutives.description, dbo.consecutives.has_prefix, dbo.consecutives.prefix, dbo.consecutives.has_range, dbo.consecutives.initial, dbo.consecutives.[final]
+from dbo.consecutives
+    inner join dbo.consecutives_types on dbo.consecutives.consecutive_type_ID = dbo.consecutives_types.ID
+where dbo.consecutives.ID = @ID;
+
+
+
+---------------------- CONSECUTIVES--------------------------------
+
