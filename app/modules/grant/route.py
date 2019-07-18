@@ -7,14 +7,16 @@ from app.modules.grant.service import Grant
 grant_module = Blueprint('grant_module', __name__)
 
 @grant_module.route('/api/module/grant', methods=['POST'])
-@protected
-@adminOnly
-def create(data):
+#@protected
+#@adminOnly
+def create():
     service = Grant()
 
     body = request.get_json(silent=True)
 
-    data = {"jwt_user": data['username']}
+    #data = {"jwt_user": data['username']}
+    data = {"jwt_user": 'cjt9'}
+
     main_dict = {**body, **data}
 
     message = service.create(main_dict)

@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify
 login_module = Blueprint('login_module', __name__)
 
 
-@login_module.route('/api/module/login/signIn', methods=['POST'])
+@login_module.route('/api/module/login', methods=['POST'])
 def login():
     service = Login()
 

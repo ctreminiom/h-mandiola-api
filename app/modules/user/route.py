@@ -17,6 +17,7 @@ def create(data):
 
     data = {"jwt_user": data['username']}
 
+
     main_dict = {**body, **data}
 
     message = service.create(main_dict)
@@ -31,6 +32,7 @@ def getAll(data):
     service = User()
 
     data = {"jwt_user": data['username']}
+
     message = service.gets(data)
 
     return jsonify(message["message"]), message["status"]

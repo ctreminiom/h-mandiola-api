@@ -24,6 +24,8 @@ class Login:
                     service = Grant()
                     data["jwt_user"] = "admin"
 
+                    print("aaaaaaaaaaaaaaaaaa")
+
                     message = service.get(data)
 
                     token_payload = {
@@ -34,17 +36,19 @@ class Login:
                         'queries': False
                     }
 
+                    print(token_payload)
+
                     for i in range(len(message["message"])):
 
                         role = message["message"][i]["role"]
 
-                        if role == 'Administracion':
+                        if role == 'Administration':
                             token_payload["admin"] = True
-                        if role == 'consecutive':
+                        if role == 'Consecutive':
                             token_payload["consecutive"] = True
-                        if role == 'security':
+                        if role == 'Security':
                             token_payload["security"] = True
-                        if role == 'queries':
+                        if role == 'Queries':
                             token_payload["queries"] = True
 
                     token = create(token_payload)

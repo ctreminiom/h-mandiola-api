@@ -162,6 +162,7 @@ def queryOnly(f):
             if data == "expired": return jsonify({'message': "token expired"}), 403
 
             print(data['queries'])
+            print(data['admin'])
 
             if data['queries'] == True or data['admin'] == True:
                 print("asss")

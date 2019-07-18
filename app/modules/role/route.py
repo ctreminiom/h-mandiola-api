@@ -13,6 +13,7 @@ def create(data):
     body = request.get_json(silent=True)
 
     data = {"jwt_user": data['username']}
+
     main_dict = {**body, **data}
 
     message = service.create(main_dict)
