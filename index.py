@@ -41,6 +41,10 @@ from app.modules.consecutiveType.router import type_module
 application.register_blueprint(type_module)
 
 
+from app.modules.consecutive.router import consecutive_module
+application.register_blueprint(consecutive_module)
+
+
 checkOut()
 
     

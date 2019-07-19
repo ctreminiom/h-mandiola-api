@@ -69,11 +69,13 @@ class consecutiveType:
     nextID = "exec dbo.get_consecutives_types_sequence;"
 
 class consecutive:
-    insert = "dbo.insert_consecutive @ID = '{}'m ConsecutiveType = '{}', @Description = '{}', @HasPrefix = '{}', @Prefix = '{}', @HasRange = '{}', @Initial = '{}', @Final = '{}';"
+    insert = "exec dbo.insert_consecutive @ID = '{}', @ConsecutiveType = '{}', @Description = '{}', @HasPrefix = '{}', @Prefix = '{}', @HasRange = '{}', @Initial = '{}', @Final = '{}';"
     getAll = "select * from dbo.get_consecutives;"
     getConsecutive = "exec dbo.get_consecutive @ID = '{}';"
     nextID = "exec dbo.get_consecutives_sequence;"
     update_has_prefix = "exec dbo.update_has_prefix @ID = '{}', @HasPrefix = '{}';"
+
+
 
 
 
