@@ -49,6 +49,10 @@ application.register_blueprint(consecutive_module)
 from app.modules.activity.router import activity_module
 application.register_blueprint(activity_module)
 
+from app.modules.productType.router import product_type_module
+application.register_blueprint(product_type_module)
+
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 GOOGLE_CLOUD = ROOT_DIR + "/docs/h-mandiola-beb59920ed9d.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_CLOUD

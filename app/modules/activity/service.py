@@ -11,7 +11,6 @@ from config import configuration
 
 from werkzeug.utils import secure_filename
 
-
 class Activity:
     def gets(self,data):
         try:
@@ -63,10 +62,6 @@ class Activity:
             consecutive_code = encrypt(message["message"][0]["prefix"])
             consecutive_num = encrypt(str(row[0]))
 
-            print("-------------")
-            print(data['name'])
-            print("-------------")
-
             name = encrypt(data["name"])
             description = encrypt(data["description"])
 
@@ -90,10 +85,7 @@ class Activity:
                 test = "activities/{}".format(file_name)
 
                 image_location = upload_blob("h-mandiola-files",path, test)
-                print("------------")
-                print(image_location)
-                print("------------")
-
+                os.remove(path)
 
             image_path = encrypt(image_location)
 
@@ -122,12 +114,6 @@ class Activity:
             context = {"database": database,
                        "jwt_user": data["jwt_user"], "err": err}
             return insertError(context)
-
-
-
-
-
-
 
 
 

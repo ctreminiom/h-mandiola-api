@@ -290,3 +290,32 @@ insert into dbo.activities
 values
     (@ID, @Consecutive, @ConsecutiveKey , @ConsecutiveNum, @Name, @Description, @ImagePath);
 GO;
+---------------------- ACTIVITIES--------------------------------
+
+
+----------------PRODUCT TYPE----------------
+create sequence dbo.product_type_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_product_type_sequence
+as
+select next value for dbo.product_type_sequence;
+GO;
+
+create view dbo.get_product_types
+as
+  select * from dbo.products_types;
+GO;
+
+create procedure dbo.insert_product_type
+    @ID varchar(900),
+    @Name varchar(8000)
+as
+insert into dbo.products_types
+    (ID, name)
+values
+    (@ID, @Name);
+GO;
+
+
+
+

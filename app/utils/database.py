@@ -82,6 +82,11 @@ class activity:
     getAll = "select * from dbo.get_activities;"
     nextID = "exec dbo.get_activities_sequence;"
 
+class productType:
+    insert = "exec dbo.insert_product_type @ID = '{}', @Name = '{}';"
+    getAll = "select * from dbo.get_product_types;"
+    nextID = "exec dbo.get_product_type_sequence;"
+
 
 
 
