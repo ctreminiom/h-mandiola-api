@@ -55,6 +55,8 @@ class user:
     getAll = "select * from dbo.get_users;"
     nextID = "exec dbo.get_users_sequence;"
     getUser = "exec dbo.get_user @Username = '{}'"
+    updatePass = "exec dbo.update_password @Username = '{}', @Password = '{}';"
+    checkSecurityPass = "exec dbo.check_security_password = @Username = '{}';"
 
 class grant:
     insert = "exec dbo.insert_grant @ID = '{}', @User = '{}', @Role = '{}';" 
@@ -74,6 +76,12 @@ class consecutive:
     getConsecutive = "exec dbo.get_consecutive @ID = '{}';"
     nextID = "exec dbo.get_consecutives_sequence;"
     update_has_prefix = "exec dbo.update_has_prefix @ID = '{}', @HasPrefix = '{}';"
+
+class activity:
+    insert = "exec dbo.insert_activity @ID = '{}', @Consecutive = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
+    getAll = "select * from dbo.get_activities;"
+    nextID = "exec dbo.get_activities_sequence;"
+
 
 
 

@@ -6,6 +6,8 @@ from app.utils.database import checkOut
 
 from flask_cors import CORS
 
+import os
+
 application = Flask(__name__)
 CORS(application)
 
@@ -44,8 +46,16 @@ application.register_blueprint(type_module)
 from app.modules.consecutive.router import consecutive_module
 application.register_blueprint(consecutive_module)
 
+from app.modules.activity.router import activity_module
+application.register_blueprint(activity_module)
 
-checkOut()
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+GOOGLE_CLOUD = ROOT_DIR + "/docs/h-mandiola-beb59920ed9d.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_CLOUD
+
+ASSETS = ROOT_DIR + "/assets/"
+os.environ["ASSETS_PATH"] = ASSETS
+
 
     
 if __name__ == "__main__":

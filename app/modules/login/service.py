@@ -24,8 +24,6 @@ class Login:
                     service = Grant()
                     data["jwt_user"] = "admin"
 
-                    print("aaaaaaaaaaaaaaaaaa")
-
                     message = service.get(data)
 
                     token_payload = {
@@ -35,8 +33,6 @@ class Login:
                         'security': False,
                         'queries': False
                     }
-
-                    print(token_payload)
 
                     for i in range(len(message["message"])):
 

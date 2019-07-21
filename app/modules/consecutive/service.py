@@ -65,11 +65,11 @@ class Consecutive:
             if 'final' not in data:
                 final = encrypt('null')
 
-            query = consecutive.insert.format(id, cType, description, has_prefix, prefix, has_range, initial, final)
+            query = consecutive.insert.format(
+                id, cType, description, has_prefix, prefix, has_range, initial, final)
 
             print(id)
             print(query)
-
 
             cursor = database.execute(query)
 
@@ -88,6 +88,41 @@ class Consecutive:
             database.close()
 
             return {'message': 'The consecutive has been created', 'status': 201}
+
+        except pymssql.Error as err:
+            context = {"database": database,
+                       "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)
+
+    def get(self, data):
+        try:
+            database = SQL()
+
+            query = consecutive.getConsecutive.format(encrypt(data["id"]))
+            cursor = database.execute(query)
+
+            row = cursor.fetchone()
+
+            if not row:
+                return {'message': "The consecutive doesn't exits", 'status': 404}
+
+            result = []
+            while row:
+                result.append({'id': decrypt(row[0]),
+                               'type': decrypt(row[1]),
+                               'description': decrypt(row[2]),
+                               'has_prefix': decrypt(row[3]),
+                               'prefix': decrypt(row[4]),
+                               'has_range': decrypt(row[5]),
+                               'initial': decrypt(row[6]),
+                               'final': decrypt(row[7]),
+                               })
+
+                row = cursor.fetchone()
+
+            database.close()
+
+            return {'message': result, 'status': 200}
 
         except pymssql.Error as err:
             context = {"database": database,

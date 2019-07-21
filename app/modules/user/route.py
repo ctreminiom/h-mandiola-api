@@ -53,3 +53,21 @@ def getByUsername(data):
 
     return jsonify(message["message"]), message["status"]
 
+
+@user_module.route('/api/module/user', methods=['PUT'])
+@protected
+@securityOnly
+def updatePass(data):
+    service = User()
+
+    args = request.args
+    data = {"jwt_user": data['username'], 'username': args['username']}
+
+    body = request.get_json(silent=True)
+
+    main_dict = {**body, **data}
+
+    message = service.updatePassword(main_dict)
+
+    return jsonify(message["message"]), message["status"]
+

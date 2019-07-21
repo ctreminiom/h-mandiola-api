@@ -115,6 +115,20 @@ insert into dbo.users
     (ID, username, email, password, security_question, security_answer)
 values
     (@ID, @Username, @Email, @Password, @Security_Question, @Security_Answer);
+GO;
+create procedure dbo.update_password
+    @Username varchar(900),
+    @Password varchar(900)
+as
+UPDATE dbo.users SET password= @Password WHERE username= @Username;
+GO;
+create procedure dbo.check_security_password
+    @Username varchar(900)
+as
+SELECT security_answer
+FROM dbo.users
+WHERE username= @Username;
+GO;
 ---------------------- USERS ---------------------------------
 
 
@@ -244,3 +258,35 @@ where dbo.consecutives.ID = @ID;
 
 ---------------------- CONSECUTIVES--------------------------------
 
+
+---------------------- ACTIVITIES--------------------------------
+create sequence dbo.activities_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_activities_sequence
+as
+select next value for dbo.activities_sequence;
+GO;
+
+create view dbo.get_activities
+as
+    select dbo.activities.ID, dbo.consecutives_types.name as "consecutive", dbo.consecutives.prefix, dbo.activities.consecutive_num, dbo.activities.name, dbo.activities.description, dbo.activities.image_path
+    from dbo.activities
+        inner join dbo.consecutives on dbo.activities.consecutive_ID = dbo.consecutives.ID
+        inner join dbo.consecutives_types on dbo.consecutives.consecutive_type_ID = dbo.consecutives_types.ID;
+GO;
+
+
+create procedure dbo.insert_activity
+    @ID varchar(900),
+    @Consecutive varchar(900),
+    @ConsecutiveKey varchar(8000),
+    @ConsecutiveNum	varchar(8000),
+    @Name varchar(8000),
+    @Description varchar(8000),
+    @ImagePath varchar(8000)
+as
+insert into dbo.activities
+    (ID, consecutive_ID, consecutive_key, consecutive_num, name, description, image_path)
+values
+    (@ID, @Consecutive, @ConsecutiveKey , @ConsecutiveNum, @Name, @Description, @ImagePath);
+GO;
