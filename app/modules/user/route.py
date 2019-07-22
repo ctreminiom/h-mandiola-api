@@ -71,3 +71,18 @@ def updatePass(data):
 
     return jsonify(message["message"]), message["status"]
 
+
+@user_module.route('/api/module/user', methods=['DELETE'])
+@protected
+@securityOnly
+def deleteUser(data):
+    service = User()
+
+    args = request.args
+
+    data = {"jwt_user": data['username'], 'username': args['username']}
+
+    message = service.delete(data)
+
+    return jsonify(message["message"]), message["status"]
+

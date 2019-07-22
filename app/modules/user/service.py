@@ -141,3 +141,39 @@ class User:
             context = {"database": database,
                        "jwt_user": data["jwt_user"], "err": err}
             return insertError(context)
+
+    def delete(self, data):
+        try:
+            database = SQL()
+
+            cursor = database.execute(
+                user.getUser.format(encrypt(data["username"])))
+            row = cursor.fetchone()
+            if not row:
+                return {'message': "The username doesn't exits", 'status': 404}
+
+            #Delete the user
+            query = user.deleteUser.format(encrypt(data["username"]))
+            cursor = database.execute(query)
+
+            context = {
+                "database": database,
+                "jwt_user": data["jwt_user"],
+                "code": "DELETE",
+                "table": "dbo.Users",
+                "id": "PASSWORD",
+                "user": data["jwt_user"]
+            }
+
+            insertLog(context)
+
+            database.commit()
+            database.close()
+
+            return {'message': "The user has been removed", 'status': 201}
+
+            
+        except pymssql.Error as err:
+            context = {"database": database,
+                       "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)

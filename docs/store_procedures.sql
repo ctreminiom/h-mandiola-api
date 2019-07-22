@@ -129,6 +129,12 @@ SELECT security_answer
 FROM dbo.users
 WHERE username= @Username;
 GO;
+
+create procedure dbo.delete_user
+    @Username varchar(900)
+as
+DELETE FROM ulacit.dbo.users WHERE username = @Username;
+
 ---------------------- USERS ---------------------------------
 
 

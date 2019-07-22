@@ -56,7 +56,8 @@ class user:
     nextID = "exec dbo.get_users_sequence;"
     getUser = "exec dbo.get_user @Username = '{}'"
     updatePass = "exec dbo.update_password @Username = '{}', @Password = '{}';"
-    checkSecurityPass = "exec dbo.check_security_password = @Username = '{}';"
+    checkSecurityPass = "exec dbo.check_security_password  @Username = '{}';"
+    deleteUser = "exec dbo.delete_user @Username = '{}';"
 
 class grant:
     insert = "exec dbo.insert_grant @ID = '{}', @User = '{}', @Role = '{}';" 
