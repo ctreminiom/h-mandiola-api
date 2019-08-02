@@ -1,25 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-class config:
+class configuration:
 
-    db_host = "34.73.78.37"
-    db_user = "SA"
-    db_passw = "Ulacit123456789"
-    db_name = "test"
+    host = "35.188.37.134"
+    user = "SA"
+    passw = "Ulacit123456789"
+    name = "ulacit"
 
-    encypt_key = "atgwYVYMZrNSyDZvWRP6xnMqdkjEPc5LFFma4NDzpHtEgzDUBmVJCrpg6bZQXPKLcFN9MTfyXZ8NbCYJqWETCyuRJAjnjJfNu3eLypZxDTFmfLZZWf9"
-    jwt_key = "LWwP5EGuSU38VN9JgmHcvpPUtsxm9sXXqeQUJWRANzCHHLHr62Nk83NWSwuPedpk6HZKsYuVmZAHRCjmLE3MQrmcJz9j7EWWYFsy2GfKmNnqhrSgnSq"
-
-    api_port = 5000
+    first_key = "BA2gnz"
+    last_key = "K3k8qM"
 
 
+    jwt = "LWwP5EGuSU38VN9JgmHcvpPUtsxm9sXXqeQUJWRANzCHHLHr62Nk83NWSwuPedpk6HZKsYuVmZAHRCjmLE3MQrmcJz9j7EWWYFsy2GfKmNnqhrSgnSq"
 
-class insertProcedures:
-    consecutive_type = "exec addConsecutiveType2 @ID = '{}', @Name = '{}';"
+    port = 5000
 
-
-
-
-class sequences:
-    consecutive_type = "exec getNextValueConsecutiveTypes;"
+    allowed_extensions = set(['pdf', 'png', 'jpg', 'jpeg'])
