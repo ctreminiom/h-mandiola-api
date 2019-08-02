@@ -48,6 +48,7 @@ class log:
 class role:
     insert = "exec dbo.insert_role @ID = '{}', @Name = '{}';"
     getAll = "select * from dbo.get_roles;"
+    getRole = "exec dbo.get_role_by_name @Name = '{}';"
     nextID = "exec dbo.get_roles_sequence;"
 
 class user:
@@ -63,7 +64,7 @@ class grant:
     insert = "exec dbo.insert_grant @ID = '{}', @User = '{}', @Role = '{}';" 
     getGrant = "exec dbo.get_grant @Username = '{}';"
     nextID = "exec dbo.get_grants_sequence;"
-    removeGrant = "exec dbo.remove_grant = @User = '{}', @Role = '{}';"
+    removeGrant = "exec dbo.remove_grant @User = '{}', @Role = '{}';"
 
 
 class consecutiveType:

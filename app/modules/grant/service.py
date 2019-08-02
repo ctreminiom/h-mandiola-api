@@ -1,4 +1,4 @@
-from app.utils.database import SQL, grant, error, log
+from app.utils.database import SQL, grant, error, log, user, role
 from app.utils.encryt import encrypt, decrypt
 
 from app.modules.error.service import insertError
@@ -43,10 +43,15 @@ class Grant:
             row = cursor.fetchone()
 
             id = encrypt(str(row[0]))
-            user = encrypt(data["username"])
-            role = encrypt(data["role"])
 
-            query = grant.insert.format(id, user, role)
+            # Get the username ID
+            cursor = database.execute(
+                user.getUser.format(encrypt(data["username"])))
+            row = cursor.fetchone()
+            userID = row[0]
+            user_encripted = userID
+
+            query = grant.insert.format(id, user_encripted, encrypt(data["role"]))
             cursor = database.execute(query)
 
             context = {
@@ -70,12 +75,18 @@ class Grant:
                        "jwt_user": data["jwt_user"], "err": err}
             return insertError(context)
 
-    def remove(self, data):
+    def delete(self, data):
         try:
             database = SQL()
 
-            database.execute(grant.removeGrant.format(
-                encrypt(data["username"]), encrypt(data["role"])))
+            # Get the username ID
+            cursor = database.execute(
+                user.getUser.format(encrypt(data["username"])))
+            row = cursor.fetchone()
+            userID = row[0]
+
+            # Remove the grant
+            database.execute(grant.removeGrant.format(userID, encrypt(data["role"])))
 
             context = {
                 "database": database,

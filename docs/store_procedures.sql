@@ -23,6 +23,12 @@ insert into dbo.roles
 values
     (@ID, @Name);
 GO;
+
+create procedure dbo.get_role_by_name
+    @Name varchar(8000)
+as
+select * from dbo.roles where name=@Name;
+
 ---------------------- ROLES ---------------------------------
 
 
@@ -135,7 +141,10 @@ create procedure dbo.delete_user
 as
 DELETE FROM ulacit.dbo.users WHERE username = @Username;
 
+
 ---------------------- USERS ---------------------------------
+
+
 
 
 ---------------------- GRANT ---------------------------------
@@ -174,7 +183,6 @@ insert into dbo.grants
 values
     (@ID, @User, @Role);
 GO;
-
 ---------------------- GRANT ---------------------------------
 
 
@@ -309,7 +317,8 @@ GO;
 
 create view dbo.get_product_types
 as
-  select * from dbo.products_types;
+    select *
+    from dbo.products_types;
 GO;
 
 create procedure dbo.insert_product_type
