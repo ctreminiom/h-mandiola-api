@@ -86,3 +86,9 @@ def deleteUser(data):
 
     return jsonify(message["message"]), message["status"]
 
+
+
+@user_module.route('/api/module/user/me', methods=['GET'])
+@protected
+def me(data):
+    return jsonify(data), 200
