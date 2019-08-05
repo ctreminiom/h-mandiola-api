@@ -52,6 +52,15 @@ application.register_blueprint(activity_module)
 from app.modules.productType.router import product_type_module
 application.register_blueprint(product_type_module)
 
+from app.modules.product.router import product_module
+application.register_blueprint(product_module)
+
+from app.modules.roomType.router import room_type_module
+application.register_blueprint(room_type_module)
+
+from app.modules.room.router import room_module
+application.register_blueprint(room_module)
+
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 GOOGLE_CLOUD = ROOT_DIR + "/docs/h-mandiola-beb59920ed9d.json"

@@ -83,11 +83,28 @@ class activity:
     insert = "exec dbo.insert_activity @ID = '{}', @Consecutive = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @Name = '{}', @Description = '{}', @ImagePath = '{}';"
     getAll = "select * from dbo.get_activities;"
     nextID = "exec dbo.get_activities_sequence;"
+    deleteActivity = "exec dbo.delete_activity @ID = '{}';"
 
 class productType:
     insert = "exec dbo.insert_product_type @ID = '{}', @Name = '{}';"
     getAll = "select * from dbo.get_product_types;"
     nextID = "exec dbo.get_product_type_sequence;"
+
+class product:
+    insert = "exec dbo.insert_product @ID = '{}', @ConsecutiveID = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @ProductType = '{}', @Name = '{}', @Description = '{}', @Price = '{}', @Inventory = '{}';"
+    getAll = "select * from dbo.get_products;"
+    nextID = "exec dbo.get_product_sequence;"
+
+
+class roomType:
+    insert = "exec dbo.insert_room_type @ID = '{}', @Name = '{}', @Description = '{}', @Price = '{}';"
+    getAll = "select * from dbo.get_rooms_types;"
+    nextID = "exec dbo.get_rooms_type_sequence;"
+
+class room:
+    insert = "exec dbo.insert_room @ID = '{}', @ConsecutiveID = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @RoomType = '{}', @Number = '{}', @Description = '{}', @Available = '{}', @ImagePath = '{}';"
+    getAll = "select * from dbo.get_rooms;"
+    nextID = "exec dbo.get_rooms_sequence;"
 
 
 

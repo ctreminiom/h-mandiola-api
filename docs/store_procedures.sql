@@ -27,7 +27,9 @@ GO;
 create procedure dbo.get_role_by_name
     @Name varchar(8000)
 as
-select * from dbo.roles where name=@Name;
+select *
+from dbo.roles
+where name=@Name;
 
 ---------------------- ROLES ---------------------------------
 
@@ -304,6 +306,13 @@ insert into dbo.activities
 values
     (@ID, @Consecutive, @ConsecutiveKey , @ConsecutiveNum, @Name, @Description, @ImagePath);
 GO;
+
+
+create procedure dbo.delete_activity
+    @ID varchar(900)
+as
+delete from dbo.activities where ID=@ID;
+
 ---------------------- ACTIVITIES--------------------------------
 
 
@@ -330,6 +339,122 @@ insert into dbo.products_types
 values
     (@ID, @Name);
 GO;
+----------------PRODUCT TYPE----------------
+
+
+----------------PRODUCT----------------
+create sequence dbo.product_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_product_sequence
+as
+select next value for dbo.product_sequence;
+GO;
+
+
+create view dbo.get_products
+as
+    select dbo.products.ID, dbo.consecutives_types.name as "consecutive", dbo.consecutives.prefix, dbo.products.consecutive_num , dbo.products_types.name as "productType", dbo.products.name, dbo.products.description, dbo.products.price, dbo.products.inventory
+    from dbo.products
+        inner join dbo.products_types on dbo.products.product_type_ID = dbo.products_types.ID
+        inner join dbo.consecutives on dbo.products.consecutive_ID = dbo.consecutives.ID
+        inner join dbo.consecutives_types on dbo.consecutives.consecutive_type_ID = dbo.consecutives_types.ID;
+GO;
+
+
+
+create procedure dbo.insert_product
+    @ID varchar(900),
+    @ConsecutiveID varchar(900),
+    @ConsecutiveKey varchar(900),
+    @ConsecutiveNum varchar(900),
+    @ProductType varchar(900),
+    @Name varchar(8000),
+    @Description varchar(8000),
+    @Price varchar(8000),
+    @Inventory varchar(8000)
+as
+INSERT INTO dbo.products
+    (ID, consecutive_ID, consecutive_key, consecutive_num, product_type_ID, name, description, price, inventory)
+VALUES(@ID, @ConsecutiveID, @ConsecutiveKey, @ConsecutiveNum, @ProductType, @Name, @Description, @Price, @Inventory);
+GO;
+----------------PRODUCT----------------
+
+
+
+----------------Rooms Type----------------
+
+create sequence dbo.rooms_type_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_rooms_type_sequence
+as
+select next value for dbo.rooms_type_sequence;
+GO;
+
+
+create view dbo.get_rooms_types
+as
+    select *
+    from dbo.rooms_types;
+GO;
+
+create procedure dbo.insert_room_type
+    @ID varchar(900),
+    @Name varchar(8000),
+    @Description varchar(8000),
+    @Price varchar(8000)
+as
+insert into dbo.rooms_types
+    (ID, name, description, price)
+values
+    (@ID, @Name, @Description, @Price);
+GO;
+
+----------------Rooms Type----------------
+
+
+
+----------------Rooms----------------
+
+create sequence dbo.rooms_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_rooms_sequence
+as
+select next value for dbo.rooms_sequence;
+GO;
+
+
+create view dbo.get_rooms
+as
+    select dbo.rooms.ID, dbo.consecutives_types.name as "consecutive", dbo.consecutives.prefix as "key", dbo.rooms.consecutive_sum, dbo.rooms_types.name as "roomType", dbo.rooms.[number], dbo.rooms.description, dbo.rooms.available, dbo.rooms.image_path
+    from dbo.rooms
+        inner join dbo.rooms_types on dbo.rooms.room_type_ID = dbo.rooms_types.ID
+        inner join dbo.consecutives on dbo.rooms.consecutive_ID = dbo.consecutives.ID
+        inner join dbo.consecutives_types on dbo.consecutives.consecutive_type_ID = dbo.consecutives_types.ID;
+GO;
+
+
+create procedure dbo.insert_room
+    @ID varchar(900),
+    @ConsecutiveID varchar(900),
+    @ConsecutiveKey varchar(900),
+    @ConsecutiveNum varchar(900),
+    @RoomType varchar(900),
+    @Number varchar(8000),
+    @Description varchar(8000),
+    @Available varchar(8000),
+    @ImagePath varchar(8000)
+as
+INSERT INTO dbo.rooms
+    (ID, consecutive_ID, consecutive_key, consecutive_sum, room_type_ID, [number], description, available, image_path)
+VALUES(@ID, @ConsecutiveID, @ConsecutiveKey, @ConsecutiveNum, @RoomType, @Number, @Description, @Available, @ImagePath);
+GO;
+
+
+
+
+
+
+
 
 
 
