@@ -94,6 +94,7 @@ class product:
     insert = "exec dbo.insert_product @ID = '{}', @ConsecutiveID = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @ProductType = '{}', @Name = '{}', @Description = '{}', @Price = '{}', @Inventory = '{}';"
     getAll = "select * from dbo.get_products;"
     nextID = "exec dbo.get_product_sequence;"
+    deleteProduct = "exec dbo.delete_product @ID = '{}';"
 
 
 class roomType:
@@ -105,6 +106,7 @@ class room:
     insert = "exec dbo.insert_room @ID = '{}', @ConsecutiveID = '{}', @ConsecutiveKey = '{}', @ConsecutiveNum = '{}', @RoomType = '{}', @Number = '{}', @Description = '{}', @Available = '{}', @ImagePath = '{}';"
     getAll = "select * from dbo.get_rooms;"
     nextID = "exec dbo.get_rooms_sequence;"
+    deleteRoom = "exec dbo.delete_room @ID = '{}';"
 
 
 

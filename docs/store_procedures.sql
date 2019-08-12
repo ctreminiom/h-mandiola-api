@@ -377,6 +377,13 @@ INSERT INTO dbo.products
     (ID, consecutive_ID, consecutive_key, consecutive_num, product_type_ID, name, description, price, inventory)
 VALUES(@ID, @ConsecutiveID, @ConsecutiveKey, @ConsecutiveNum, @ProductType, @Name, @Description, @Price, @Inventory);
 GO;
+
+
+create procedure dbo.delete_product
+    @ID varchar(900)
+as
+delete from dbo.products where ID=@ID;
+
 ----------------PRODUCT----------------
 
 
@@ -449,6 +456,11 @@ INSERT INTO dbo.rooms
 VALUES(@ID, @ConsecutiveID, @ConsecutiveKey, @ConsecutiveNum, @RoomType, @Number, @Description, @Available, @ImagePath);
 GO;
 
+
+create procedure dbo.delete_room
+    @ID varchar(900)
+as
+delete from dbo.rooms where ID=@ID;
 
 
 

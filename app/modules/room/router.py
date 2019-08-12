@@ -41,3 +41,18 @@ def getAll(data):
     message = service.gets(data)
 
     return jsonify(message["message"]), message["status"]
+
+
+@room_module.route('/api/module/room', methods=['DELETE'])
+@protected
+@adminOnly
+def deleteRoom(data):
+    service = Room()
+
+    args = request.args
+
+    data = {"jwt_user": data['username'], 'id': args['id']}
+
+    message = service.delete(data)
+
+    return jsonify(message["message"]), message["status"]

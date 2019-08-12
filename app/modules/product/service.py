@@ -93,3 +93,31 @@ class Product:
             context = {"database": database,
                        "jwt_user": data["jwt_user"], "err": err}
             return insertError(context)
+
+    def delete(self, data):
+        try:
+            database = SQL()
+
+            query = product.deleteProduct.format(encrypt(data['id']))
+            database.execute(query)
+
+            context = {
+                "database": database,
+                "jwt_user": data["jwt_user"],
+                "code": "DELETE",
+                "table": "dbo.Products",
+                "id": "PASSWORD",
+                "user": data["jwt_user"]
+            }
+
+            insertLog(context)
+
+            database.commit()
+            database.close()
+
+            return {'message': "The product has been removed", 'status': 201}
+
+        except pymssql.Error as err:
+            context = {"database": database,
+                    "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)

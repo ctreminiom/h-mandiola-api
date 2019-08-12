@@ -33,3 +33,18 @@ def getAll(data):
     message = service.gets(data)
 
     return jsonify(message["message"]), message["status"]
+
+
+@product_module.route('/api/module/product', methods=['DELETE'])
+@protected
+@adminOnly
+def deleteProduct(data):
+    service = Product()
+
+    args = request.args
+
+    data = {"jwt_user": data['username'], 'id': args['id']}
+
+    message = service.delete(data)
+
+    return jsonify(message["message"]), message["status"]

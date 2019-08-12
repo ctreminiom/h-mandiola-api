@@ -118,6 +118,35 @@ class Room:
             return insertError(context)
 
 
+    def delete(self, data):
+        try:
+            database = SQL()
+
+            query = room.deleteRoom.format(encrypt(data['id']))
+            database.execute(query)
+
+            context = {
+                "database": database,
+                "jwt_user": data["jwt_user"],
+                "code": "DELETE",
+                "table": "dbo.Rooms",
+                "id": "PASSWORD",
+                "user": data["jwt_user"]
+            }
+
+            insertLog(context)
+
+            database.commit()
+            database.close()
+
+            return {'message': "The room has been removed", 'status': 201}
+
+        except pymssql.Error as err:
+            context = {"database": database,
+                    "jwt_user": data["jwt_user"], "err": err}
+            return insertError(context)
+
+
 
 def allowed_file(filename):
     print(filename.rsplit('.', 1)[1].lower())
