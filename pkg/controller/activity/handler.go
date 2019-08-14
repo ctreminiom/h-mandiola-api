@@ -46,7 +46,7 @@ func (a *activity) gets() ([]activity, error) {
 	return decodes(activities), nil
 }
 
-func (a *activity) insert(imagePath string) error {
+func (a *activity) insert(source string) error {
 
 	db := service.Pool()
 	tx, err := db.Begin()
@@ -64,10 +64,19 @@ func (a *activity) insert(imagePath string) error {
 		return err
 	}
 
+	//Upload the image to Google Storage
+	blobName := fmt.Sprintf("activities/%v%v", service.Encrypt(id), a.Image)
+
+	storageURL, err := service.Upload(source, "h-mandiola-files", blobName)
+
+	if err != nil {
+		return err
+	}
+
 	query := fmt.Sprintf(service.InsertActivity, service.Encrypt(id), service.Encrypt(a.Consecutive),
 		service.Encrypt(a.Name),
 		service.Encrypt(a.Description),
-		service.Encrypt(a.Image))
+		service.Encrypt(storageURL))
 
 	_, err = tx.Exec(query)
 

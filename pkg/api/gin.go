@@ -54,6 +54,7 @@ func Start() {
 	router.GET("/module/clients", client.Gets)
 
 	router.POST("/module/activity", activity.Create)
+	router.GET("/module/activities", activity.Gets)
 
 	router.GET("/module/logs", log.Gets)
 	router.GET("/module/errors", errorm.Gets)

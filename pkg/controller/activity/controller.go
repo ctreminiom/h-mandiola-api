@@ -6,8 +6,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ctreminiom/h-mandiola-api/pkg/service"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,17 +27,35 @@ func Create(c *gin.Context) {
 	}
 
 	name := fmt.Sprintf("%v/img/%v", rootProjectPath, file.Filename)
-
 	c.SaveUploadedFile(file, name)
 
-	destinationBlobName := fmt.Sprintf("activities/%v", file.Filename)
+	newActivity := activity{}
+	newActivity.Consecutive = c.PostForm("consecutive")
+	newActivity.Name = c.PostForm("name")
+	newActivity.Description = c.PostForm("description")
+	newActivity.Image = file.Filename
 
-	url, err := service.Upload(name, "h-mandiola-files", destinationBlobName)
+	err = newActivity.insert(name)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", url))
+	c.JSON(http.StatusCreated, gin.H{"message": fmt.Sprintf("The activity %v has been created!", newActivity.Name)})
+}
+
+// Gets ...
+func Gets(c *gin.Context) {
+
+	context := activity{}
+
+	activities, err := context.gets()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": activities})
 }
