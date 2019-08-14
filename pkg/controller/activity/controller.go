@@ -32,12 +32,14 @@ func Create(c *gin.Context) {
 
 	c.SaveUploadedFile(file, name)
 
-	err = service.Upload(name, "h-mandiola-files", name)
+	destinationBlobName := fmt.Sprintf("activities/%v", file.Filename)
+
+	url, err := service.Upload(name, "h-mandiola-files", destinationBlobName)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
+	c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", url))
 }

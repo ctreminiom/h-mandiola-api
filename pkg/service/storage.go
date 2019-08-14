@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"os"
 
@@ -9,20 +10,20 @@ import (
 )
 
 // Upload ...
-func Upload(file, bucket, object string) error {
+func Upload(file, bucket, object string) (string, error) {
 
 	ctx := context.Background()
 
 	client, err := storage.NewClient(ctx)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	f, err := os.Open(file)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	defer f.Close()
@@ -32,14 +33,14 @@ func Upload(file, bucket, object string) error {
 	_, err = io.Copy(wc, f)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = wc.Close()
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return fmt.Sprintf("https://storage.googleapis.com/h-mandiola-files/%v", object), nil
 }
