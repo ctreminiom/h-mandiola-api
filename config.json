@@ -1,0 +1,14 @@
+{
+    "encrypt": {
+        "key": "BA2gnz,K3k8qM"
+    },
+
+    "sql": {
+        "server": "35.188.37.134",
+        "port": 1433,
+        "user": "SA",
+        "password": "Ulacit123456789",
+        "database": "uat"
+    }
+
+}
