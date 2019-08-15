@@ -1,6 +1,7 @@
 package client
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -20,6 +21,29 @@ type payload struct {
 }
 
 type client struct{ ID, Consecutive, First, Last, Username, Email, Sub, Aud string }
+
+func (c *client) get() (*client, error) {
+
+	db := service.Pool()
+
+	query := fmt.Sprintf(service.GetClient, service.Encrypt(c.Sub))
+
+	var r client
+	err := db.QueryRow(query).Scan(&r.ID, &r.Email, &r.Sub, &r.Aud)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if r.ID == "" {
+		return nil, errors.New("Client not found")
+	}
+
+	result := decode(r)
+
+	return &result, nil
+
+}
 
 func (c *client) gets() ([]client, error) {
 

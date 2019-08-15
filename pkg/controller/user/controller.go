@@ -36,6 +36,32 @@ func Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": fmt.Sprintf("The user %v has been created!", newUser.Username)})
 }
 
+// Login ...
+func Login(c *gin.Context) {
+
+	var body payloadLogin
+
+	err := c.ShouldBindJSON(&body)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context := user{}
+	context.Username = body.Username
+	context.Password = body.Password
+
+	token, err := context.login()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": token})
+}
+
 // Password ...
 func Password(c *gin.Context) {
 

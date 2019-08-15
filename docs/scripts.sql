@@ -226,6 +226,17 @@ values
 GO;
 
 
+create procedure dbo.get_client
+    @Sub varchar(8000)
+as
+select ID, email, sub, aud
+from dbo.clients
+where aud = @Sub;
+GO;
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
 
 create sequence dbo.activities_sequence start with 1 increment by 1;
 GO;
@@ -261,3 +272,136 @@ delete from dbo.activity where ID=@ID;
 GO;
 
 
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+create sequence dbo.product_type_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_product_type_sequence
+as
+select next value for dbo.product_type_sequence;
+GO;
+
+create view dbo.get_product_types
+as
+    select * from dbo.product_types;
+GO;
+
+create procedure dbo.insert_product_type
+    @ID varchar(900),
+    @Name varchar(8000)
+as
+insert into dbo.product_types
+    (ID, name)
+values
+    (@ID, @Name);
+GO;
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+create sequence dbo.product_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_product_sequence
+as
+select next value for dbo.product_sequence;
+GO;
+
+create view dbo.get_products
+as
+select dbo.products.ID, dbo.consecutive_types.name as "consecutives", dbo.product_types.name as "type", dbo.products.name
+from dbo.products
+inner join dbo.product_types on dbo.products.[type] = dbo.product_types.ID
+inner join dbo.consecutives on dbo.products.consecutive = dbo.consecutives.ID
+inner join dbo.consecutive_types on dbo.consecutives.[type] = dbo.consecutive_types.ID;
+GO;
+
+
+create procedure dbo.insert_product
+    @ID varchar(900),
+    @Consecutive varchar(900),
+    @Type varchar(900),
+    @Name varchar(900)
+as
+INSERT INTO dbo.products
+    (ID, consecutive, [type], name)
+VALUES(@ID, @Consecutive, @Type, @Name);
+GO;
+
+
+create procedure dbo.delete_product
+    @ID varchar(900)
+as
+delete from dbo.products where ID=@ID;
+GO;
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+create sequence dbo.rooms_type_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_rooms_type_sequence
+as
+select next value for dbo.rooms_type_sequence;
+GO;
+
+
+create view dbo.get_rooms_types
+as
+    select *
+    from dbo.room_types;
+GO;
+
+create procedure dbo.insert_room_type
+    @ID varchar(900),
+    @Name varchar(8000)
+as
+insert into dbo.room_types
+    (ID, name)
+values
+    (@ID, @Name);
+GO;
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+create sequence dbo.rooms_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_rooms_sequence
+as
+select next value for dbo.rooms_sequence;
+GO;
+
+
+create view dbo.get_rooms
+as
+    select dbo.rooms.ID, dbo.consecutive_types.name as "consecutive", dbo.room_types.name as "type", dbo.rooms.[number], dbo.rooms.description, dbo.rooms.available, dbo.rooms.[image]
+from dbo.rooms
+inner join dbo.room_types on dbo.rooms.[type] = dbo.room_types.ID
+inner join dbo.consecutives on dbo.rooms.consecutive = dbo.consecutives.ID
+inner join dbo.consecutive_types on dbo.consecutives.[type] = dbo.consecutive_types.ID;
+GO;
+
+
+create procedure dbo.insert_room
+    @ID varchar(900),
+    @Consecutive varchar(900),
+    @RoomType varchar(900),
+    @Number varchar(8000),
+    @Description varchar(8000),
+    @Available varchar(8000),
+    @Image varchar(8000)
+as
+INSERT INTO dbo.rooms
+    (ID, consecutive, [type], [number], description, available, [image])
+VALUES(@ID, @Consecutive, @RoomType, @Number, @Description, @Available, @Image);
+GO;
+
+create procedure dbo.delete_room
+    @ID varchar(900)
+as
+delete from dbo.rooms where ID=@ID;

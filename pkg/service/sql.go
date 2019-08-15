@@ -71,6 +71,7 @@ const (
 	NextIDClients = "exec dbo.get_clients_sequence;"
 	InsertClient  = "exec dbo.insert_client @ID = '%v', @Consecutive = '%v', @First = '%v', @Last = '%v', @Username = '%v', @Email = '%v', @Sub = '%v', @Aud = '%v';"
 	GetClients    = "select * from dbo.get_clients;"
+	GetClient     = "exec dbo.get_client @Sub = '%v';"
 
 	NextIDGrants = "exec dbo.get_grants_sequence;"
 	InsertGrant  = "exec dbo.insert_grant @ID = '%v', @User = '%v', @Role = '%v';"
@@ -81,4 +82,22 @@ const (
 	InsertActivity = "exec dbo.insert_activity @ID = '%v', @Consecutive = '%v', @Name = '%v', @Description = '%v', @Image = '%v';"
 	GetActivities  = "select * from dbo.get_activities;"
 	RemoveActivity = "exec dbo.delete_activity @ID = '%v';"
+
+	NextIDProductType = "exec dbo.get_product_type_sequence;"
+	InsertProductType = "exec dbo.insert_product_type @ID = '%v', @Name = '%v';"
+	GetProductTypes   = "select * from dbo.get_product_types"
+
+	NextIDProduct = "exec dbo.get_product_sequence;"
+	InsertProduct = "exec dbo.insert_product @ID = '%v', @Consecutive = '%v', @Type = '%v', @Name = '%v';"
+	GetProducts   = "select * from dbo.get_products;"
+	RemoveProduct = "exec dbo.delete_product @ID = '%v';"
+
+	NextIDRoomType = "exec dbo.get_rooms_type_sequence;"
+	InsertRoomType = "exec dbo.insert_room_type @ID = '%v', @Name = '%v';"
+	GetRoomsTypes  = "select * from dbo.get_rooms_types;"
+
+	NextIDRooms = "exec dbo.get_rooms_sequence;"
+	InsertRoom  = "exec dbo.insert_room @ID = '%v', @Consecutive = '%v', @RoomType = '%v', @Number = '%v', @Description = '%v', @Available = '%v', @Image = '%v';"
+	GetRooms    = "select * from dbo.get_rooms;"
+	RemoveRoom  = "exec dbo.delete_room @ID = '%v';"
 )

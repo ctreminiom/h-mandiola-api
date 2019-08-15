@@ -52,3 +52,19 @@ func Gets(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": clients})
 }
+
+// Get ...
+func Get(c *gin.Context) {
+
+	aud := c.Param("aud")
+	context := client{Aud: aud}
+
+	result, err := context.get()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": result})
+}

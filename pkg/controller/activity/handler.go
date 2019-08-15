@@ -152,7 +152,7 @@ func (a *activity) delete() error {
 	entry.Username = "internal"
 	entry.Date = time.Now().Format("2006-01-02 15:04:05")
 	entry.Code = "DELETE"
-	entry.Detail = fmt.Sprintf("Table: %v | Username deleted: %v", "dbo.users", service.Encrypt(a.ID))
+	entry.Detail = fmt.Sprintf("Table: %v | Activity deleted: %v", "dbo.activities", service.Encrypt(a.ID))
 
 	err = entry.Insert()
 

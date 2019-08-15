@@ -1,7 +1,9 @@
 package activity
 
 import (
+	"crypto/rand"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -26,7 +28,15 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	name := fmt.Sprintf("%v/img/%v", rootProjectPath, file.Filename)
+	b := make([]byte, 16)
+	_, err = rand.Read(b)
+	if err != nil {
+		log.Fatal(err)
+	}
+	uuid := fmt.Sprintf("%x-%x-%x-%x-%x",
+		b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
+
+	name := fmt.Sprintf("%v/img/%v-%v", rootProjectPath, uuid, file.Filename)
 	c.SaveUploadedFile(file, name)
 
 	newActivity := activity{}
@@ -39,6 +49,13 @@ func Create(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err = os.Remove(name)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -58,4 +75,21 @@ func Gets(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": activities})
+}
+
+// Delete ...
+func Delete(c *gin.Context) {
+
+	id := c.Param("id")
+
+	context := activity{ID: id}
+
+	err := context.delete()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("Activity %v deleted", id)})
 }

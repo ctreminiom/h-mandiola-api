@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -18,6 +19,11 @@ type payload struct {
 }
 
 type payloadPass struct {
+	Password string `json:"password" binding:"required"`
+}
+
+type payloadLogin struct {
+	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -69,6 +75,38 @@ func (u *user) delete() error {
 	}
 
 	return nil
+}
+
+func (u *user) login() (string, error) {
+
+	db := service.Pool()
+	tx, err := db.Begin()
+
+	if err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	query := fmt.Sprintf(service.GetUser, service.Encrypt(u.Username))
+
+	var r user
+	err = tx.QueryRow(query).Scan(&r.ID, &r.Username, &r.Password, &r.Email, &r.Question)
+
+	if err != nil {
+		return "", err
+	}
+
+	if service.Encrypt(u.Password) != r.Password {
+		return "", errors.New("Incorrect username or password")
+	}
+
+	token, err := service.EncodeToken(u.Username)
+
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }
 
 func (u *user) gets() ([]user, error) {
