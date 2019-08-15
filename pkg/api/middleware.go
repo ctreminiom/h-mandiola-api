@@ -42,3 +42,15 @@ func JWT() gin.HandlerFunc {
 	}
 
 }
+
+// CORS ..
+func CORS() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+		c.Header("Access-Control-Allow-Headers", "*")
+
+		c.Next()
+	}
+
+}

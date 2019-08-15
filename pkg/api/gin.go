@@ -19,7 +19,6 @@ import (
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/role"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/room"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/user"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,8 +26,8 @@ import (
 func Start() {
 
 	router := gin.Default()
-	router.Use(cors.Default())
-	router.Use(cors.Default())
+
+	router.Use(CORS())
 
 	srv := &http.Server{
 		Addr:    ":8000",
