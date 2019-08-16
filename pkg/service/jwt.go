@@ -17,7 +17,7 @@ type Claims struct {
 // EncodeToken ...
 func EncodeToken(username string) (string, error) {
 
-	expirationTime := time.Now().Add(60 * time.Minute)
+	expirationTime := time.Now().Add(500 * time.Minute)
 	claims := &Claims{Username: username, StandardClaims: jwt.StandardClaims{ExpiresAt: expirationTime.Unix()}}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

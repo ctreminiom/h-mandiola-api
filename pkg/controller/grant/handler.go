@@ -35,7 +35,7 @@ func (g *grant) get(username string) ([]grant, error) {
 
 		var g grant
 
-		err = rows.Scan(&g.ID, &g.User, &g.Role)
+		err = rows.Scan(&g.ID, &g.Role, &g.User)
 
 		if err != nil {
 			return nil, err

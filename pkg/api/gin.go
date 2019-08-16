@@ -19,6 +19,7 @@ import (
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/role"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/room"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/user"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,24 +28,35 @@ func Start() {
 
 	router := gin.Default()
 
-	router.Use(CORS())
+	//router.Use(CORS())
 
-	srv := &http.Server{
-		Addr:    ":8000",
-		Handler: router,
-	}
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	router.GET("/module/users", user.Gets)
 
 	public := router.Group("/public")
 	{
+		//public.Use(cors.Default())
 		public.POST("/module/user/login", user.Login)
 
 		public.GET("/module/clients", client.Gets)
 		public.POST("/module/client", client.Create)
 		public.GET("/module/client/:aud", client.Get)
+
+		public.GET("/module/users", user.Gets)
 	}
 
 	private := router.Group("/private")
 	{
+
+		//private.Use(CORS())
+		//private.Use(CORS())
 		private.Use(JWT())
 
 		private.GET("/module/users", user.Gets)
@@ -129,6 +141,11 @@ func Start() {
 		router.GET("/module/logs", log.Gets)
 		router.GET("/module/errors", errorm.Gets)
 	*/
+
+	srv := &http.Server{
+		Addr:    ":8000",
+		Handler: router,
+	}
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
