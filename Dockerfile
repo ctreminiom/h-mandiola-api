@@ -1,13 +1,13 @@
-FROM python:3.6-alpine
+FROM golang:alpine 
 
-COPY . /app
+RUN mkdir -p $GOPATH/src/github.com/ctreminiom/h-mandiola-api/
 
-WORKDIR /app
+WORKDIR $GOPATH/src/github.com/ctreminiom/h-mandiola-api/
 
-RUN pip install -r requirements.txt
+COPY . .
 
-RUN mkdir assets/
+RUN CGO_ENABLED=0 go build -a -v
 
-EXPOSE 5000
+EXPOSE 8000
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "index"]
+ENTRYPOINT ["./h-mandiola-api"]
