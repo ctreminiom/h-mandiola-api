@@ -56,8 +56,8 @@ func Gets(c *gin.Context) {
 // Get ...
 func Get(c *gin.Context) {
 
-	aud := c.Param("aud")
-	context := client{Aud: aud}
+	sub := c.Param("sub")
+	context := client{Sub: sub}
 
 	result, err := context.get()
 

@@ -231,7 +231,7 @@ create procedure dbo.get_client
 as
 select ID, email, sub, aud
 from dbo.clients
-where aud = @Sub;
+where sub = @Sub;
 GO;
 
 ----------------------------------------------------------------
@@ -405,3 +405,46 @@ create procedure dbo.delete_room
     @ID varchar(900)
 as
 delete from dbo.rooms where ID=@ID;
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+create sequence dbo.reservations_sequence start with 1 increment by 1;
+GO;
+create procedure dbo.get_reservations_sequence
+as
+select next value for dbo.reservations_sequence;
+GO;
+
+
+create procedure dbo.insert_reservation
+    @ID varchar(900),
+    @Consecutive varchar(900),
+    @Client varchar(900),
+    @Room varchar(8000),
+    @StartDate varchar(8000),
+    @EndDate varchar(8000),
+    @HasPaid varchar(8000),
+    @Adults varchar(8000),
+    @Childrens varchar(8000)
+
+as
+INSERT INTO uat.dbo.reservations
+(ID, consecutive, client, room, startDate, endDate, has_paid, adults, childrens)
+VALUES(@ID, @Consecutive, @Client, @Room, @StartDate, @EndDate, @HasPaid, @Adults, @Childrens);
+GO;
+
+
+create view dbo.get_reservations
+as
+    select dbo.reservations.ID, dbo.consecutive_types.name as "consecutive", dbo.clients.username as "client", dbo.rooms.[number] as "room", dbo.reservations.startDate, dbo.reservations.endDate, dbo.reservations.has_paid, dbo.reservations.adults, dbo.reservations.childrens
+    from dbo.reservations
+    inner join dbo.consecutives on dbo.reservations.consecutive = dbo.consecutives.ID
+    inner join dbo.consecutive_types on dbo.consecutives.[type] = dbo.consecutive_types.ID
+    inner join dbo.clients on dbo.reservations.client = dbo.clients.ID
+    inner join dbo.rooms on dbo.reservations.room = dbo.rooms.ID;
+
+
+

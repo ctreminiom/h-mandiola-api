@@ -16,6 +16,7 @@ import (
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/grant"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/log"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/product"
+	"github.com/ctreminiom/h-mandiola-api/pkg/controller/reservation"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/role"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/room"
 	"github.com/ctreminiom/h-mandiola-api/pkg/controller/user"
@@ -47,9 +48,15 @@ func Start() {
 
 		public.GET("/module/clients", client.Gets)
 		public.POST("/module/client", client.Create)
-		public.GET("/module/client/:aud", client.Get)
+		public.GET("/module/client/:sub", client.Get)
 
 		public.GET("/module/users", user.Gets)
+
+		public.POST("/module/reservation", reservation.Create)
+		public.GET("/module/reservations", reservation.Gets)
+
+		public.GET("/module/rooms", room.GetsRooms)
+
 	}
 
 	private := router.Group("/private")

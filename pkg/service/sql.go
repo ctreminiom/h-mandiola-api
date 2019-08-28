@@ -100,4 +100,8 @@ const (
 	InsertRoom  = "exec dbo.insert_room @ID = '%v', @Consecutive = '%v', @RoomType = '%v', @Number = '%v', @Description = '%v', @Available = '%v', @Image = '%v';"
 	GetRooms    = "select * from dbo.get_rooms;"
 	RemoveRoom  = "exec dbo.delete_room @ID = '%v';"
+
+	NextIDReservations = "exec dbo.get_reservations_sequence;"
+	InsertReservation  = "exec dbo.insert_reservation @ID = '%v', @Consecutive = '%v', @Client = '%v', @Room = '%v', @StartDate = '%v', @EndDate = '%v', @HasPaid = '%v', @Adults = '%v', @Childrens = '%v';"
+	GetReservations    = "select * from dbo.get_reservations;"
 )
