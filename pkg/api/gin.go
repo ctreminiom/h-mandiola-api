@@ -57,6 +57,8 @@ func Start() {
 
 		public.GET("/module/rooms", room.GetsRooms)
 
+		public.GET("/module/products", product.GetsProducts)
+
 	}
 
 	private := router.Group("/private")
